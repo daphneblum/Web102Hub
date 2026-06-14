@@ -7,7 +7,7 @@
     justify-content: center;
     gap: 24px;
     padding: 40px;
-    color: rgba(180, 230, 255, 0.95);
+    color: rgba(180, 255, 245, 0.95);
     text-shadow: 0 0 6px rgba(0, 200, 255, 0.5);
     text-align: center;
 }
@@ -19,12 +19,15 @@
 .deck-button {
     font-family: inherit;
     font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
     padding: 12px 24px;
-    border-radius: 8px;
-    background: rgba(0, 10, 30, 0.75);
-    border: 1px solid rgba(0, 200, 255, 0.4);
-    color: rgba(0, 220, 255, 0.9);
-    text-shadow: 0, 0, 8px rgba(0, 200, 255, 0.8);
+    border-radius: 50px;
+    background: linear-gradient(135deg, rgba(90, 35, 75, 0.8), rgba(60, 25, 70, 0.8));
+    border: 1px solid rgba(255, 140, 200, 0.4);
+    color: rgba(255, 220, 240, 0.95);
+    text-shadow: 0, 0, 8px rgba(255, 140, 200, 0.6);
+    box-shadow: 0 0 20px rgba(255, 107, 157, 0.15), inset 0 1px 0 rgba( 255, 255, 255, 0.08);
     cursor: pointer;
     transition: box-shadow 0.2s ease, background 0.2s ease;
 }
@@ -34,8 +37,9 @@
 .next-button:hover,
 .score-button:hover,
 .deck-button:hover {
-    box-shadow: 0 0 15px rgba(0,200,255, 0.4);
-    background: rgba(0, 30, 60, 0.85);
+    box-shadow: 0 0 30px rgba(255, 107, 157, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: rgba(255, 200, 87, 0.6);
+    transform: translateY(-2px);
 }
 
 .options {
@@ -87,15 +91,35 @@
 }
 
 .score-button.correct {
-    border-color: rgba(0, 255, 150, 0.4);
-    color: rgba(0, 255, 150, 0.9);
-    text-shadow: 0, 0, 8px rgba(0, 255, 150, 0.5);
+    border-color: rgba(255, 200, 87, 0.5);
+    color: rgba(255, 220, 150, 0.95);
+    text-shadow: 0 0 8px rgba(255, 200, 87, 0.6);
 }
 
 .score-button.incorrect {
-    border-color: rgba(255, 80, 80, 0.4);
-    color: rgba(255, 80, 80, 0.9);
-    text-shadow: 0 0 8px rgba(255, 80, 80, 0.5);
+    border-color: rgba(199, 125, 255, 0.5);
+    color: rgba(220, 180, 255, 0.95);
+    text-shadow: 0 0 8px rgba(199, 125, 255, 0.6);
+}
+
+.main-menu h1 {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 900;
+  font-size: 28px;
+  letter-spacing: 4px;
+  background: linear-gradient(135deg, #ffc857, #ff6b9d, #c77dff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.4));
+}
+
+.card-count {
+  font-family: "Orbitron", sans-serif;
+  font-size: 20px;
+  letter-spacing: 4px;
+  color: #ffc857;
+  text-shadow: 0 0 12px rgba(255, 200, 87, 0.6);
 }
 
 @keyframes hologram-appear {

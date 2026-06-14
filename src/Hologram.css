@@ -1,33 +1,46 @@
 .hologram {
-  background: rgba(0, 10, 30, 0.75);
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 200, 230, 0.03) 2px,
+      rgba(255, 200, 230, 0.03) 4px
+    ),
+    linear-gradient(
+      135deg,
+      rgba(45, 20, 60, 0.85) 0%,
+      rgba(90, 35, 75, 0.8) 50%,
+      rgba(40, 15, 55, 0.85) 100%
+    );
   border: 1px solid var(--border-color);
-  box-shadow: 0 0 20px var(--glow-color), inset 0 0 20px rgba(0, 200, 255, 0.03);
-  backdrop-filter: blur(6px);
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 200, 255, 0.02) 2px,
-    rgba(0, 200, 255, 0.02) 4px
-  );
+  border-radius: 24px;
+  box-shadow:
+    0 0 30px var(--glow-color),
+    0 0 70px rgba(255, 140, 200, 0.12),
+    inset 0 0 30px rgba(255, 200, 230, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
 }
 
 .hologram-text {
-  color: rgba(180, 230, 255, 0.95);
-  text-shadow: 0 0 6px rgba(0, 200, 255, 0.5);
+  color: rgba(255, 220, 240, 0.95);
+  text-shadow: 0 0 8px rgba(255, 140, 200, 0.5);
 }
 
 .hologram-label {
   font-size: 11px;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--text-color);
-  text-shadow: 0 0 8px var(--glow-color);
+  text-shadow: 0 0 10px var(--glow-color);
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
 }
 
 .hologram-hint {
   font-size: 10px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: rgba(0, 200, 255, 0.35);
+  color: rgba(255, 180, 220, 0.4);
 }

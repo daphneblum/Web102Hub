@@ -18,25 +18,33 @@ function FlashcardDeck() {
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [currentDeck, setCurrentDeck] = useState(null);
     const [score, setScore] = useState({ correct: 0, incorrect: 0});
-
-    function getRandomCardIndex(deck, excludeIndex) {
-        if (deck.cards.length === 1) return 0;
-        let newIndex;
-        do {
-            newIndex = Math.floor(Math.random() * deck.cards.length);
-        } while (newIndex === excludeIndex);
-        return newIndex;
-    }
+    const [cardsSeen, setCardsSeen] = useState(1)
+    const [seenIndices, setSeenIndices] = useState([]);
 
     function handleSelectDeck(deck) {
+        const startIndex = Math.floor(Math.random() * deck.cards.length);
         setCurrentDeck(deck);
-        setCurrentCardIndex(Math.floor(Math.random() * deck.cards.length));
+        setCurrentCardIndex(startIndex);
+        setSeenIndices([startIndex]);
         setScore({ correct: 0, incorrect: 0});
+        setCardsSeen(1);
         setCurrentScreen('study');
     }
 
     function handleNextCard() {
-        setCurrentCardIndex(getRandomCardIndex(currentDeck, currentCardIndex));
+        const totalCards = currentDeck.cards.length;
+
+        let updatedSeen = seenIndices.length >= totalCards ? [] : seenIndices;
+
+        const remainingIndices = currentDeck.cards
+            .map((_, index) => index)
+            .filter(index => !updatedSeen.includes(index));
+
+        const randomIndex = remainingIndices[Math.floor(Math.random() * remainingIndices.length)];
+
+        setCurrentCardIndex(randomIndex);
+        setSeenIndices([...updatedSeen, randomIndex]);
+        setCardsSeen(prev => prev === totalCards ? 1 : prev + 1);
     }
 
     function handleScore(type) {
@@ -95,7 +103,7 @@ function FlashcardDeck() {
             <div className="study-screen">
                 <h2>{currentDeck.title}</h2>
                 <p className="card-count">
-                    {currentCardIndex + 1} / {currentDeck.cards.length}
+                    {cardsSeen} / {currentDeck.cards.length}
                 </p>
 
                 <Flashcard card={card} />
