@@ -1,0 +1,33 @@
+.hologram {
+  background: rgba(0, 10, 30, 0.75);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 20px var(--glow-color), inset 0 0 20px rgba(0, 200, 255, 0.03);
+  backdrop-filter: blur(6px);
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 200, 255, 0.02) 2px,
+    rgba(0, 200, 255, 0.02) 4px
+  );
+}
+
+.hologram-text {
+  color: rgba(180, 230, 255, 0.95);
+  text-shadow: 0 0 6px rgba(0, 200, 255, 0.5);
+}
+
+.hologram-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-color);
+  text-shadow: 0 0 8px var(--glow-color);
+}
+
+.hologram-hint {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(0, 200, 255, 0.35);
+}

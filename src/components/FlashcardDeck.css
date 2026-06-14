@@ -1,0 +1,6 @@
+@keyframes hologram-appear {
+  0%   { opacity: 0; transform: scaleY(0.02); filter: brightness(3); }
+  30%  { opacity: 0.8; transform: scaleY(1.02); filter: brightness(1.5); }
+  60%  { opacity: 0.6; filter: brightness(2); }  /* flicker */
+  100% { opacity: 1; transform: scaleY(1); filter: brightness(1); }
+}
