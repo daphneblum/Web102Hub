@@ -112,6 +112,8 @@
   background-clip: text;
   color: transparent;
   filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.4));
+  text-shadow:
+    0 0 80px #00ffc0;
 }
 
 .card-count {

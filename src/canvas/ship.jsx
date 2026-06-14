@@ -40,9 +40,9 @@ function ShipCanvas() {
             >
             <CameraSetup />
             <ambientLight intensity={0.4} />
-            <pointLight position={[26, 12, 10]} intensity={4} color="#ff6b9d" distance={18} decay={0} />
-            <pointLight position={[43, 12, -3]} intensity={4} color="#9d4edd" distance={15} decay={0} />
-            <pointLight position={[34.5, 14, 12]} intensity={3.5} color="#ffc857" distance={15} decay={0} />
+            <pointLight position={[26, 12, 10]} intensity={6} color="#ff6b9d" distance={18} decay={0} />
+            <pointLight position={[43, 12, -3]} intensity={6} color="#9d4edd" distance={15} decay={0} />
+            <pointLight position={[34.5, 14, 12]} intensity={5} color="#ffc857" distance={15} decay={0} />
 
             <mesh>
             <boxGeometry />
