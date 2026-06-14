@@ -48,16 +48,16 @@ function FlashcardDeck() {
             <div className="main-menu">
                 <h1>Intergalactic Cultural Interpreter Training</h1>
                 <div className="options">
-                    <button className="menu-button" onDoubleClick={() => setCurrentScreen('view-decks')}>
+                    <button className="menu-button" onClick={() => setCurrentScreen('view-decks')}>
                         View
                     </button>
-                    <button className="menu-button" onDoubleClick={() => alert('Coming soon!')}>
+                    <button className="menu-button" onClick={() => alert('Coming soon!')}>
                         Add
                     </button>
-                    <button className="menu-button" onDoubleClick={() => alert('Coming soon!')}>
+                    <button className="menu-button" onClick={() => alert('Coming soon!')}>
                         Edit
                     </button>
-                    <button className="menu-button" onDoubleClick={() => alert('Coming soon!')}>
+                    <button className="menu-button" onClick={() => alert('Coming soon!')}>
                         Delete
                     </button>
                 </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./Flashcard.css";
-import "../../Hologram.css"
+import "../Hologram.css"
 
 const categoryColors = {
     Easy: {
