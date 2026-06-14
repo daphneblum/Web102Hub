@@ -1,5 +1,5 @@
-import Flashcard from "./flashcard";
-import defaultCards from "./defaultCards";
+import Flashcard from "./Flashcard";
+import defaultCards from "./DefaultCards";
 import "./FlashcardDeck.css";
 import { useState } from "react";
 
