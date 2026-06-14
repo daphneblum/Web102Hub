@@ -54,7 +54,7 @@ function FlashcardDeck() {
     if (currentScreen === 'main-menu') {
         return(
             <div className="main-menu">
-                <h1>Intergalactic Cultural Interpreter Training</h1>
+                <h1>Intergalactic Interpreter Training</h1>
                 <div className="options">
                     <button className="menu-button" onClick={() => setCurrentScreen('view-decks')}>
                         View
