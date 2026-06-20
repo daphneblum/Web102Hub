@@ -47,8 +47,14 @@ function FlashcardDeck() {
         setCardsSeen(prev => prev === totalCards ? 1 : prev + 1);
     }
 
-    function handleScore(type) {
-        setScore(prev => ({ ...prev,[type]: prev[type] + 1 }))
+    function handleScore(type, action) {
+        setScore(prev => {
+            if (action === 'increment') {
+                return { ...prev, [type]: prev[type] + 1};
+            } else {
+                return { ...prev, [type]: Math.max(0, prev[type] - 1) };
+            }
+        });
     }
 
     if (currentScreen === 'main-menu') {
@@ -106,13 +112,13 @@ function FlashcardDeck() {
                     {cardsSeen} / {currentDeck.cards.length}
                 </p>
 
-                <Flashcard card={card} />
+                <Flashcard card={card} onScore={handleScore} />
 
                 <div className="score-row">
-                    <button className="score-button correct" onClick={() => handleScore('correct')}>
+                    <button className="score-button correct" onClick={() => handleScore('correct', 'increment')}>
                         Correct ({score.correct})
                     </button>
-                    <button className="score-button incorrect" onClick={() => handleScore('incorrect')}>
+                    <button className="score-button incorrect" onClick={() => handleScore('incorrect', 'increment')}>
                         Incorrect ({score.incorrect})
                     </button>
                 </div>

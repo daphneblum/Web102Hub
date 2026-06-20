@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Flashcard.css";
 import "../Hologram.css"
 
@@ -22,7 +22,21 @@ const categoryColors = {
 
 function Flashcard({ card }) {
     const [flipped, setFlipped] = useState(false);
+    const [answer, setAnswer] = useState('');
+    const [submitted,setSubmitted] = useState('');
+    const handleChange = (e) => {setAnswer(e.target.value)};
     const colors = categoryColors[card.category] || categoryColors.Medium; 
+    const isCorrect = answer.trim().toLowerCase() === card.answer.trim().toLowerCase();
+    const handleCheck = (e) => {
+      e.stopPropagation();
+      setSubmitted(true);
+    }
+
+    useEffect(() => {
+      setAnswer('');
+      setSubmitted(false);
+      setFlipped(false);
+    }, [card]);
 
     return (
         <div
@@ -43,6 +57,22 @@ function Flashcard({ card }) {
                             <img src={card.image} alt="card visual" className="card-image" />
                         )}
                         <p className="card-text hologram-text">{card.question}</p>
+                        <input 
+                          type="text"
+                          id="answer"
+                          value={answer}
+                          onChange={handleChange}
+                          onClick={(e) => e.stopPropagation()}
+                          placeholder="Type answer here" 
+                        />
+
+                        <button onClick={handleCheck}>Check Answer</button>
+
+                        {submitted && (
+                          <p className={isCorrect ? "feedback-correct" : "feedback-incorrect"}>
+                            {isCorrect ? "Correct!" : "Not quite - flip to see the answer"}
+                          </p>
+                        )}
                         <span className="flip-hint hologram-hint">Click to reveal answer</span>
                     </div>
 

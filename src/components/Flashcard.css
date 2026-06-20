@@ -56,3 +56,15 @@
 .flip-hint {
   margin-top: auto;
 }
+
+.feedback-correct {
+  color: #ffd76a;
+  text-shadow: 0 0 10px rgba(255, 200, 87, 0.6);
+  font-weight: bold;
+}
+
+.feedback-correct {
+  color: #ff8fab;
+  text-shadow: 0 0 10px rgba(255, 107, 157, 0.6);
+  font-weight: bold;
+}
