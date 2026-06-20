@@ -1,6 +1,7 @@
 .flashcard-container {
   width: 380px;
-  height: 480px;
+  min-height: 480px;
+  height: auto;
   perspective: 1000px;
   cursor: pointer;
 }
@@ -19,7 +20,7 @@
 
 .flashcard-front,
 .flashcard-back {
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
@@ -35,6 +36,9 @@
 }
 
 .flashcard-back {
+  position: absolute;
+  top: 0;
+  left: 0;
   transform: rotateY(180deg);
 }
 
@@ -67,4 +71,52 @@
   color: #ff8fab;
   text-shadow: 0 0 10px rgba(255, 107, 157, 0.6);
   font-weight: bold;
+}
+
+.answer-input {
+  font-family: "Courier New", monospace;
+  width: 100%;
+  font-size: 15px;
+  padding: 10px 14px;
+  background: rgb(15, 5, 20, 0.85);
+  border: 1px solid rgba(255, 107, 157, 0.4);
+  border-radius: 4px;
+  color: #ffd76a;
+  caret-color: #ffd76a;
+  outline: none;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.answer-input::placeholder {
+  color: rgba(255, 215, 130, 0.35)
+}
+
+.answer-input:focus {
+  border-color: rgba(255, 200, 87, 0.6);
+  box-shadow: inset 
+    0 0 10px rgba(0, 0, 0, 0.5),
+    0 0 12px rgba(255, 200, 87, 0.3);
+}
+
+.check-button, .contest-button {
+  font-size: 14px;
+  letter-spacing: 1px;
+  padding: 10px 20px;
+  background: rgba(15, 5, 20, 0.85);
+  border: 1px solid rgba(255, 107, 157, 0.5);
+  border-radius: 4px;
+  color: #ff8fab;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+}
+
+.check-button::before {
+  content: "> ";
+  color: rgba(255, 200, 87, 0.6);
+}
+
+.check-button:hover, .contest-button:hover {
+  background: rgba(255, 107, 157, 0.15);
+  box-shadow: 0 0 14px rgba(255, 107, 157, 0.3);
 }

@@ -20,26 +20,43 @@ const categoryColors = {
   },
 };
 
+function normalizeAnswer(text) {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/^(a|an|the)\s+/i, '')  
+    .replace(/\s+/g, ' ');            
+}
+
 function Flashcard({ card, onScore }) {
     const [flipped, setFlipped] = useState(false);
     const [answer, setAnswer] = useState('');
     const [submitted,setSubmitted] = useState('');
-    const handleChange = (e) => {setAnswer(e.target.value)};
+    const handleChange = (e) => {
+      setAnswer(e.target.value)
+      setSubmitted(false);
+      setResult(null);
+    };
     const colors = categoryColors[card.category] || categoryColors.Medium; 
-    const isCorrect = answer.trim().toLowerCase() === card.answer.trim().toLowerCase();
+    const isCorrect = normalizeAnswer(answer) === normalizeAnswer(card.answer); // ignores articles
+    const [result, setResult] = useState(null);
     const handleCheck = (e) => {
       e.stopPropagation();
+      const correct = normalizeAnswer(answer) === normalizeAnswer(card.answer);
+      setResult(correct)
       setSubmitted(true);
+
       if (isCorrect) {
         onScore('correct', 'increment')
       } else {
-        onScore('incorrent', 'increment')
+        onScore('incorrect', 'increment')
       }
     };
 
     useEffect(() => {
       setAnswer('');
       setSubmitted(false);
+      setResult(null);
       setFlipped(false);
     }, [card]);
 
@@ -65,24 +82,25 @@ function Flashcard({ card, onScore }) {
                         <input 
                           type="text"
                           id="answer"
+                          className="answer-input"
                           value={answer}
                           onChange={handleChange}
                           onClick={(e) => e.stopPropagation()}
                           placeholder="Type answer here" 
                         />
 
-                        <button onClick={handleCheck}>Check Answer</button>
+                        <button className="check-button" onClick={handleCheck}>Check Answer</button>
 
                         {submitted && (
                           <div className="feedback-row">
-                            <p className={isCorrect ? "feedback-correct" : "feedback-incorrect"}>
-                            {isCorrect ? "Correct!" : "Not quite - flip to see the answer"}
+                            <p className={result ? "feedback-correct" : "feedback-incorrect"}>
+                            {result ? "Correct!" : "Not quite - flip to see the answer"}
                           </p>
                           <button
                             className="contest-button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (isCorrect) {
+                              if (result) {
                                 onScore('correct', 'decrement');
                                 onScore('incorrect', 'increment');
                               } else {
@@ -94,7 +112,7 @@ function Flashcard({ card, onScore }) {
                             </button>
                           </div>
                         )}
-                        <span className="flip-hint hologram-hint">Click to reveal answer</span>
+                        <span className="flip-hint hologram-hint">Click to flip</span>
                     </div>
 
                     {/* back of card */}
