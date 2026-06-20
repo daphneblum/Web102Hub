@@ -20,7 +20,7 @@ const categoryColors = {
   },
 };
 
-function Flashcard({ card }) {
+function Flashcard({ card, onScore }) {
     const [flipped, setFlipped] = useState(false);
     const [answer, setAnswer] = useState('');
     const [submitted,setSubmitted] = useState('');
@@ -30,7 +30,12 @@ function Flashcard({ card }) {
     const handleCheck = (e) => {
       e.stopPropagation();
       setSubmitted(true);
-    }
+      if (isCorrect) {
+        onScore('correct', 'increment')
+      } else {
+        onScore('incorrent', 'increment')
+      }
+    };
 
     useEffect(() => {
       setAnswer('');
@@ -69,9 +74,25 @@ function Flashcard({ card }) {
                         <button onClick={handleCheck}>Check Answer</button>
 
                         {submitted && (
-                          <p className={isCorrect ? "feedback-correct" : "feedback-incorrect"}>
+                          <div className="feedback-row">
+                            <p className={isCorrect ? "feedback-correct" : "feedback-incorrect"}>
                             {isCorrect ? "Correct!" : "Not quite - flip to see the answer"}
                           </p>
+                          <button
+                            className="contest-button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (isCorrect) {
+                                onScore('correct', 'decrement');
+                                onScore('incorrect', 'increment');
+                              } else {
+                                onScore('incorrect', 'decrement');
+                                onScore('correct', 'increment');
+                              }
+                            }}>
+                              That's wrong, flip my score
+                            </button>
+                          </div>
                         )}
                         <span className="flip-hint hologram-hint">Click to reveal answer</span>
                     </div>
