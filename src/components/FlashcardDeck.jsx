@@ -12,39 +12,47 @@ const initialDecks = [
     },
 ];
 
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
 function FlashcardDeck() {
     const [currentScreen, setCurrentScreen] = useState('main-menu');
     const [allDecks, setAllDecks] = useState(initialDecks);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [currentDeck, setCurrentDeck] = useState(null);
     const [score, setScore] = useState({ correct: 0, incorrect: 0});
-    const [cardsSeen, setCardsSeen] = useState(1)
-    const [seenIndices, setSeenIndices] = useState([]);
+    const [cardOrder, setCardOrder] = useState([])
 
     function handleSelectDeck(deck) {
-        const startIndex = Math.floor(Math.random() * deck.cards.length);
+        const sequentialOrder = deck.cards.map((_, index) => index);
         setCurrentDeck(deck);
-        setCurrentCardIndex(startIndex);
-        setSeenIndices([startIndex]);
+        setCardOrder(sequentialOrder);
+        setCurrentCardIndex(0)
         setScore({ correct: 0, incorrect: 0});
-        setCardsSeen(1);
         setCurrentScreen('study');
     }
 
-    function handleNextCard() {
-        const totalCards = currentDeck.cards.length;
+    function handleNext() {
+        if (currentCardIndex < cardOrder.length - 1) {
+            setCurrentCardIndex(prev => prev + 1);
+        }
+    }
 
-        let updatedSeen = seenIndices.length >= totalCards ? [] : seenIndices;
+    function handlePrevious() {
+        if (currentCardIndex > 0) {
+            setCurrentCardIndex(prev => prev - 1);
+        }
+    }
 
-        const remainingIndices = currentDeck.cards
-            .map((_, index) => index)
-            .filter(index => !updatedSeen.includes(index));
-
-        const randomIndex = remainingIndices[Math.floor(Math.random() * remainingIndices.length)];
-
-        setCurrentCardIndex(randomIndex);
-        setSeenIndices([...updatedSeen, randomIndex]);
-        setCardsSeen(prev => prev === totalCards ? 1 : prev + 1);
+    function handleShuffle() {
+        setCardOrder(shuffleArray(cardOrder));
+        setCurrentCardIndex(0);
     }
 
     function handleScore(type, action) {
@@ -104,12 +112,16 @@ function FlashcardDeck() {
     }
 
     if (currentScreen === 'study') {
-        const card = currentDeck.cards[currentCardIndex];
+        const realIndex = cardOrder[currentCardIndex];
+        const card = currentDeck.cards[realIndex];
+        const isFirst = currentCardIndex === 0;
+        const isLast = currentCardIndex === cardOrder.length - 1;
+
         return (
             <div className="study-screen">
                 <h2>{currentDeck.title}</h2>
                 <p className="card-count">
-                    {cardsSeen} / {currentDeck.cards.length}
+                    {currentCardIndex} / {cardOrder.length}
                 </p>
 
                 <Flashcard card={card} onScore={handleScore} />
@@ -123,9 +135,18 @@ function FlashcardDeck() {
                     </button>
                 </div>
 
-                <button className="next-button" onClick={handleNextCard}>
-                    Next
-                </button>
+                <div className="nav-row">
+                    <button className="nav-button" onClick={handlePrevious} disabled={isFirst}>
+                            Previous
+                    </button>
+                    <button className="shuffle-button" onClick={handleShuffle}>
+                        Shuffle
+                    </button>
+                    <button className="nav-button" onClick={handleNext} disabled={isLast}>
+                        Next
+                    </button>
+
+                </div>
 
                 <button className="back-button" onClick={() => setCurrentScreen('view-decks')}>
                     Back to Decks

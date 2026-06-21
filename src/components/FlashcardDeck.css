@@ -124,6 +124,24 @@
   text-shadow: 0 0 12px rgba(255, 200, 87, 0.6);
 }
 
+.nav-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.nav-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.nav-button:disabled:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: rgba(255, 140, 200, 0.4);
+}
+
 @keyframes hologram-appear {
   0%   { opacity: 0; transform: scaleY(0.02); filter: brightness(3); }
   30%  { opacity: 0.8; transform: scaleY(1.02); filter: brightness(1.5); }
