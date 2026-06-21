@@ -196,13 +196,13 @@ font-size: 14px;
   transition: all 0.2s ease;
 }
 
-.nav-button:disabled {
+.nav-button:disabled, .check-button:disabled {
   opacity: 0.3;
   cursor: not-allowed;
   box-shadow: none;
 }
 
-.nav-button:disabled:hover {
+.nav-button:disabled:hover, .check-button:disabled:hover {
   transform: none;
   box-shadow: none;
   border-color: rgba(255, 140, 200, 0.4);

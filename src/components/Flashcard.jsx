@@ -20,7 +20,7 @@ const categoryColors = {
   },
 };
 
-function normalizeAnswer(text) {
+function normalizeAnswer(text) { //ignore articles in answer
   return text
     .trim()
     .toLowerCase()
@@ -31,18 +31,19 @@ function normalizeAnswer(text) {
 function Flashcard({ card, onScore, currentStreak }) {
     const [flipped, setFlipped] = useState(false);
     const [answer, setAnswer] = useState('');
-    const [submitted,setSubmitted] = useState('');
+    const [submitted,setSubmitted] = useState(false);
+    const [result, setResult] = useState(null);
     const handleChange = (e) => {
       setAnswer(e.target.value)
       setSubmitted(false);
       setResult(null);
     };
     const colors = categoryColors[card.category] || categoryColors.Medium; 
-    const isCorrect = normalizeAnswer(answer) === normalizeAnswer(card.answer); // ignores articles
-    const [result, setResult] = useState(null);
     const [streakBeforeAnswer, setStreakBeforeAnswer] = useState(0);
     const handleCheck = (e) => {
       e.stopPropagation();
+      if (answer.trim() === '') return;
+
       const correct = normalizeAnswer(answer) === normalizeAnswer(card.answer);
       setResult(correct)
       setSubmitted(true);
@@ -91,7 +92,7 @@ function Flashcard({ card, onScore, currentStreak }) {
                           placeholder="Type answer here" 
                         />
 
-                        <button className="check-button" onClick={handleCheck}>Check Answer</button>
+                        <button className="check-button" onClick={handleCheck} disabled={answer.trim() === ''}>Check Answer</button>
 
                         {submitted && (
                           <div className="feedback-row">
