@@ -28,7 +28,7 @@ function normalizeAnswer(text) {
     .replace(/\s+/g, ' ');            
 }
 
-function Flashcard({ card, onScore }) {
+function Flashcard({ card, onScore, currentStreak }) {
     const [flipped, setFlipped] = useState(false);
     const [answer, setAnswer] = useState('');
     const [submitted,setSubmitted] = useState('');
@@ -40,16 +40,17 @@ function Flashcard({ card, onScore }) {
     const colors = categoryColors[card.category] || categoryColors.Medium; 
     const isCorrect = normalizeAnswer(answer) === normalizeAnswer(card.answer); // ignores articles
     const [result, setResult] = useState(null);
+    const [streakBeforeAnswer, setStreakBeforeAnswer] = useState(0);
     const handleCheck = (e) => {
       e.stopPropagation();
       const correct = normalizeAnswer(answer) === normalizeAnswer(card.answer);
       setResult(correct)
       setSubmitted(true);
 
-      if (isCorrect) {
-        onScore('correct', 'increment')
+      if (correct) {
+        onScore('correct', 'increment', true)
       } else {
-        onScore('incorrect', 'increment')
+        onScore('incorrect', 'increment', true)
       }
     };
 
@@ -58,6 +59,7 @@ function Flashcard({ card, onScore }) {
       setSubmitted(false);
       setResult(null);
       setFlipped(false);
+      setStreakBeforeAnswer(currentStreak)
     }, [card]);
 
     return (
@@ -102,10 +104,10 @@ function Flashcard({ card, onScore }) {
                               e.stopPropagation();
                               if (result) {
                                 onScore('correct', 'decrement');
-                                onScore('incorrect', 'increment');
+                                onScore('incorrect', 'increment', true);
                               } else {
                                 onScore('incorrect', 'decrement');
-                                onScore('correct', 'increment');
+                                onScore('correct', 'increment', true, streakBeforeAnswer);
                               }
                             }}>
                               That's wrong, flip my score

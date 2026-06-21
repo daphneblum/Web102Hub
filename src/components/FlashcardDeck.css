@@ -80,6 +80,60 @@
     opacity: 0.6;
 }
 
+.study-screen {
+    position: relative;
+}
+
+.streak-panel {
+    position: absolute;
+    right: -220px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 180px;
+    padding: 20px;
+    border-radius: 16px;
+    background:
+        repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(150, 220, 255, 0.03) 2px,
+        rgba(150, 220, 255, 0.03) 4px
+        ),
+        linear-gradient(135deg, rgba(20, 40, 60, 0.85), rgba(15, 30, 50, 0.85));
+    border: 1px solid rgba(120, 200, 255, 0.4);
+    box-shadow:
+        0 0 25px rgba(120, 200, 255, 0.25),
+        inset 0 0 20px rgba(120, 200, 255, 0.04);
+}
+
+.streak-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.streak-label {
+    font-family: "Orbitron", sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(150, 220, 255, 0.7);
+    text-shadow: 0 0 8px rgba(120, 200, 255, 0.5);
+}
+
+.streak-value {
+    font-family: "Orbitron", sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: #9fdfff;
+    text-shadow:  0 0 14px rgba(120, 200, 255, 0.7);
+}
+
 .card-count {
     font-size: 18px;
     letter-spacing: 2px;
@@ -128,6 +182,18 @@
   display: flex;
   gap: 16px;
   align-items: center;
+}
+
+.nav-button, .shuffle-button {
+font-size: 14px;
+  letter-spacing: 1px;
+  padding: 10px 20px;
+  background: rgba(15, 5, 20, 0.85);
+  border: 1px solid rgba(255, 107, 157, 0.5);
+  border-radius: 4px;
+  color: #ff8fab;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .nav-button:disabled {

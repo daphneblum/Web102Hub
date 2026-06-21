@@ -26,7 +26,12 @@ function FlashcardDeck() {
     const [allDecks, setAllDecks] = useState(initialDecks);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [currentDeck, setCurrentDeck] = useState(null);
-    const [score, setScore] = useState({ correct: 0, incorrect: 0});
+    const [score, setScore] = useState({ 
+        correct: 0, 
+        incorrect: 0,
+        currentStreak: 0,
+        longestStreak: 0,
+        });
     const [cardOrder, setCardOrder] = useState([])
 
     function handleSelectDeck(deck) {
@@ -34,7 +39,7 @@ function FlashcardDeck() {
         setCurrentDeck(deck);
         setCardOrder(sequentialOrder);
         setCurrentCardIndex(0)
-        setScore({ correct: 0, incorrect: 0});
+        setScore({ correct: 0, incorrect: 0, currentStreak: 0, longestStreak: 0});
         setCurrentScreen('study');
     }
 
@@ -55,13 +60,26 @@ function FlashcardDeck() {
         setCurrentCardIndex(0);
     }
 
-    function handleScore(type, action) {
+    function handleScore(type, action, affectsStreak = false, restoreStreak = null) {
         setScore(prev => {
+            const updated = {...prev};
+
             if (action === 'increment') {
-                return { ...prev, [type]: prev[type] + 1};
+                updated[type] = prev[type] + 1;
             } else {
-                return { ...prev, [type]: Math.max(0, prev[type] - 1) };
+                updated[type] = Math.max(0, prev[type] - 1);
             }
+
+            if (affectsStreak) {
+                const baseStreak = restoreStreak !== null ? restoreStreak : prev.currentStreak;
+                if (type === 'correct') {
+                    updated.currentStreak = baseStreak + 1;
+                    updated.longestStreak = Math.max(prev.longestStreak, updated.currentStreak);
+                } else {
+                    updated.currentStreak = 0;
+                }
+            }
+            return updated;
         });
     }
 
@@ -120,20 +138,21 @@ function FlashcardDeck() {
         return (
             <div className="study-screen">
                 <h2>{currentDeck.title}</h2>
+                <div className="streak-panel">
+                    <div className="streak-stat">
+                        <span className="streak-label">Current Streak</span>
+                        <span className="streak-value">{score.currentStreak}</span>
+                    </div>
+                    <div className="streak-stat">
+                        <span className="streak-label">Longest Streak</span>
+                        <span className="streak-value">{score.longestStreak}</span>
+                    </div>
+                </div>
                 <p className="card-count">
-                    {currentCardIndex} / {cardOrder.length}
+                    {currentCardIndex + 1} / {cardOrder.length}
                 </p>
 
-                <Flashcard card={card} onScore={handleScore} />
-
-                <div className="score-row">
-                    <button className="score-button correct" onClick={() => handleScore('correct', 'increment')}>
-                        Correct ({score.correct})
-                    </button>
-                    <button className="score-button incorrect" onClick={() => handleScore('incorrect', 'increment')}>
-                        Incorrect ({score.incorrect})
-                    </button>
-                </div>
+                <Flashcard card={card} onScore={handleScore} currentStreak={score.currentStreak} />
 
                 <div className="nav-row">
                     <button className="nav-button" onClick={handlePrevious} disabled={isFirst}>
