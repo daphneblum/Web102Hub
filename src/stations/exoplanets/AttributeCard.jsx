@@ -7,7 +7,7 @@ function AttributeCard({ label, value, bannable, isBanned, onBan }) {
             onClick={bannable ? onBan : undefined}
         >
             <span className="attribute-label hologram-hint">{label}</span>
-            <span className="attribute-value hologram-hint">{value}</span>
+            <span className="attribute-value hologram-text">{value}</span>
             {bannable && (
                 <span className="ban-indicator">
                     {isBanned ? "🚫 Banned" : "Click to ban"}

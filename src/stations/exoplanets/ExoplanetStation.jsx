@@ -5,7 +5,6 @@ import AttributeCard from "./AttributeCard";
 import BanList from "./BanList";
 import "./ExoplanetStation.css";
 import "../../Hologram.css";
-import { div } from "three/tsl";
 
 function ExoplanetStation() {
     const [planetPool, setPlanetPool] = useState([]);
@@ -38,6 +37,10 @@ function ExoplanetStation() {
     function getRandomPlanet() {
         if (planetPool.length == 0) return;
         const randomIndex = Math.floor(Math.random() * planetPool.length);
+        //debug
+        const planet = planetPool[randomIndex];
+        console.log(planet); 
+        //debug ^
         setCurrentPlanet(planetPool[randomIndex]);
     }
 
@@ -83,35 +86,35 @@ function ExoplanetStation() {
                         <div className="planet-attributes">
                             <AttributeCard
                                 label="Planet"
-                                values={currentPlanet.pl_name}
+                                value={currentPlanet.pl_name}
                                 bannable={false}
                             />
                             <AttributeCard
                                 label="Host Star"
-                                values={currentPlanet.hostname}
+                                value={currentPlanet.hostname}
                                 bannable={false}
                             />
                             <AttributeCard
                                 label="Discovery Method"
-                                values={currentPlanet.discoverymethod}
+                                value={currentPlanet.discoverymethod}
                                 isBanned={banList.includes(currentPlanet.discoverymethod)}
                                 onBan={() => handleBan(currentPlanet.discoverymethod)}
                                 bannable={true}
                             /><AttributeCard
                                 label="Year Discovered"
-                                values={currentPlanet.disc_year}
+                                value={currentPlanet.disc_year}
                                 bannable={false}
                             />
                             <AttributeCard
                                 label="Orbital Period"
-                                values={currentPlanet.pl_orbper
+                                value={currentPlanet.pl_orbper
                                     ? `${currentPlanet.pl_orbper.toFixed(1)} days`
                                     : "Unknown"}
                                 bannable={false}
                             />
                             <AttributeCard
                                 label="Temperature"
-                                values={currentPlanet.pl_eqt
+                                value={currentPlanet.pl_eqt
                                     ? `${currentPlanet.pl_eqt.toFixed(0)} K`
                                     : "Unknown"
                                 }
@@ -119,7 +122,7 @@ function ExoplanetStation() {
                             />
                             <AttributeCard
                                 label="Distance"
-                                values={currentPlanet.sy_dist
+                                value={currentPlanet.sy_dist
                                     ? `${currentPlanet.sy_dist.toFixed(1)} pc`
                                     : "Unknown"
                                 }
