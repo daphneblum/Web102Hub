@@ -24,7 +24,7 @@ export function getPlanetVisuals(temperature, radiusEarths) {
         color = "blue"
     }
 
-    scale = Math.log(radiusEarths + 1) * 2;
+    scale = Math.min(Math.log(radiusEarths + 1) * 2, 2.5);
 
     return { color, emissive, scale };
 }
