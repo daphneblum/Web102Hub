@@ -1,0 +1,183 @@
+.exoplanet-station {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 32px;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 24px;
+}
+
+.station-title {
+    font-family: "Orbitron", sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #ffc857, #ff6b9d, #c77dff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.4));
+    margin: 0;
+}
+
+.station-subtitle {
+    margin: 0;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.station-layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.planet-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+
+.planet-placeholder {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 1px dashed rgba(120, 200, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.planet-attributes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+}
+
+.attribute-card {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(120, 200, 255, 0.2);
+    background: rgba(0, 10, 30, 0.5);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.attribute-card.bannable {
+    cursor: pointer;
+    border-color: rgba(255, 107, 157, 0.3);
+    transition: all 0.2s ease;
+}
+
+.attribute-card.bannable:hover {
+    border-color: rgba(255, 107, 157, 0.6);
+    box-shadow: 0 0 12px rgba(255, 107, 157, 0.2);
+}
+
+.attribute-card.banned {
+    border-color: rgba(255, 80, 80, 0.5);
+    background: rgba(255, 0, 0, 0.08);
+    opacity: 0.7;
+}
+
+.attribute-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.attribute-value {
+    font-size: 14px;
+    font-family: "Orbitron", sans-serif;
+}
+
+.ban-indicator {
+    font-size: 9px;
+    color: rgba(255, 107, 157, 0.7);
+    margin-top: 2px;
+}
+
+.engage-button {
+    font-family: "Orbitron", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 16px 40px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, rgba(90, 35, 75, 0.8), rgba(60, 25, 70, 0.8));
+    border: 1px solid rgba(255, 140, 200, 0.5);
+    color: rgba(255, 220, 240, 0.95);
+    text-shadow: 0 0 10px rgba(255, 140, 200, 0.8);
+    box-shadow: 0 0 25px rgba(255, 107, 157, 0.2);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.engage-button:hover {
+    box-shadow: 0 0 40px rgba(255, 107, 157, 0.5);
+    transform: translateY(-2px);
+}
+
+.engage-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.ban-list-panel {
+    width: 180px;
+    min-height: 200px;
+    padding: 16px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.ban-entries {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ban-entry {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 80, 80, 0.3);
+    background: rgba(255, 0, 0, 0.08);
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.ban-entry:hover {
+    border-color: rgba(255, 80, 80, 0.6);
+    box-shadow: 0 0 10px rgba(255, 80, 80, 0.2);
+}
+
+.ban-empty {
+    font-size: 11px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.error-message {
+    color: rgba(255, 80, 80, 0.9);
+    text-shadow: 0 0 8px rgba(255, 80, 80, 0.5);
+    font-size: 13px;
+    text-align: center;
+}

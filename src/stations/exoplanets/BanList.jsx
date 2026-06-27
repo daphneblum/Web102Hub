@@ -1,5 +1,5 @@
-import { div } from "three/src/nodes/TSL.js"
-import "../Hologram.css"
+
+import "../../Hologram.css"
 
 function BanList({ banList, onUnban}) {
     return (

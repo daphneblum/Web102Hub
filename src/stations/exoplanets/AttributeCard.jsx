@@ -1,4 +1,4 @@
-import "../Hologram.css";
+import "../../Hologram.css";
 
 function AttributeCard({ label, value, bannable, isBanned, onBan }) {
     return (

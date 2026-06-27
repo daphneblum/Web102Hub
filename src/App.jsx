@@ -1,5 +1,6 @@
 import ShipCanvas from "./canvas/ship";
-import FlashcardDeck from "./stations/Flashcards/FlashcardDeck"
+import FlashcardDeck from "./stations/Flashcards/FlashcardDeck";
+import ExoplanetStation from "./stations/exoplanets/ExoplanetStation";
 import './App.css';
 
 export default function App() {
@@ -7,7 +8,8 @@ export default function App() {
     <div className="App">
       <ShipCanvas />
       <div className="overlay">
-        <FlashcardDeck />
+        {/* <FlashcardDeck /> */}
+        <ExoplanetStation />
       </div>
   </div>
   );
