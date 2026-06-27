@@ -38,7 +38,9 @@ export function buildApiUrl(banList = []) {
 
     const banFilter = bannedConditions.length > 0 ? `+and+${bannedConditions}` : "";
 
-    const query = `select+pl_name,hostname,discoverymethod,disc_year,pl_orbper,pl_rade,pl_eqt,pl_bmasse,sy_dist+from+pscomppars+where+pl_eqt+is+not+null+and+pl_rade+is+not+null${banFilter}&format=json`;
+    const query = `select+pl_name,hostname,discoverymethod,disc_year,pl_orbper,pl_rade,pl_eqt,pl_bmasse,sy_dist+from+pscomppars+where+pl_eqt+is+not+null+and+pl_rade+is+not+null${banFilter}&format=json&maxrec=300`;
+    const nasaUrl = `${baseUrl}?query=${query}`;
 
-    return `${baseUrl}?query=${query}`;
+
+    return `https://corsproxy.io/?${encodeURIComponent(nasaUrl)}`;
 }
