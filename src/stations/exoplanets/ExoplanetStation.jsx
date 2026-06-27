@@ -1,1 +1,147 @@
 import { useState, useEffect } from "react";
+import { buildApiUrl, getPlanetVisuals } from "./exoplanetUtils";
+import PlanetDisplay from "./PlanetDisplay";
+import AttributeCard from "./AttributeCard";
+import BanList from "./BanList";
+import "./ExoplanetStation.css";
+import "../../Hologram.css";
+import { div } from "three/tsl";
+
+function ExoplanetStation() {
+    const [planetPool, setPlanetPool] = useState([]);
+    const [currentPlanet, setCurrentPlanet] = useState(null);
+    const [banList, setBanList] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        fetchPlanetPool([])
+    }, []);
+
+    async function fetchPlanetPool(currentBanList) {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const url = buildApiUrl(currentBanList);
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Failed to fetch planet data");
+            const data = await response.json();
+            setPlanetPool(data);
+        } catch (err) {
+            setError("Failed to contact the Federation database. Please try again.")
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    function getRandomPlanet() {
+        if (planetPool.length == 0) return;
+        const randomIndex = Math.floor(Math.random() * planetPool.length);
+        setCurrentPlanet(planetPool[randomIndex]);
+    }
+
+    function handleBan(value) {
+        if (banList.includes(value)) return;
+        const newBanList = [...banList,value];
+        setBanList(newBanList);
+        fetchPlanetPool(newBanList);
+    }
+
+    function handleUnban(value) {
+        const newBanList = banList.filter(item => item !== value);
+        setBanList(newBanList);
+        fetchPlanetPool(newBanList);
+    }
+
+    const visuals = currentPlanet ? getPlanetVisuals(currentPlanet.pl_eqt, currentPlanet.pl_rade) : null;
+
+    return (
+        <div className="exoplanet-station hologram">
+            <h1 className="station-title hologram-text">Stellar Cartography</h1>
+            <p className="station-subtitle hologram-hint">
+                Explore confirmed exoplanets from the Federation's stellar database
+            </p>
+
+            {error && <p className="error-message">{error}</p>}
+
+            <div className="station-layout">
+                <div className="planet-section">
+                    {currentPlanet && visuals ? (
+                        <PlanetDisplay
+                            color={visuals.color}
+                            emissive={visuals.emissive}
+                            scale={visuals.scale}
+                        />
+                    ) : (
+                        <div className="planet-placeholder hologram-hint">
+                            Awaiting stellar coordinates...
+                        </div>
+                    )}
+
+                    {currentPlanet && (
+                        <div className="planet-attributes">
+                            <AttributeCard
+                                label="Planet"
+                                values={currentPlanet.pl_name}
+                                bannable={false}
+                            />
+                            <AttributeCard
+                                label="Host Star"
+                                values={currentPlanet.hostname}
+                                bannable={false}
+                            />
+                            <AttributeCard
+                                label="Discovery Method"
+                                values={currentPlanet.discoverymethod}
+                                isBanned={banList.includes(currentPlanet.discoverymethod)}
+                                onBan={() => handleBan(currentPlanet.discoverymethod)}
+                                bannable={true}
+                            /><AttributeCard
+                                label="Year Discovered"
+                                values={currentPlanet.disc_year}
+                                bannable={false}
+                            />
+                            <AttributeCard
+                                label="Orbital Period"
+                                values={currentPlanet.pl_orbper
+                                    ? `${currentPlanet.pl_orbper.toFixed(1)} days`
+                                    : "Unknown"}
+                                bannable={false}
+                            />
+                            <AttributeCard
+                                label="Temperature"
+                                values={currentPlanet.pl_eqt
+                                    ? `${currentPlanet.pl_eqt.toFixed(0)} K`
+                                    : "Unknown"
+                                }
+                                bannable={false}
+                            />
+                            <AttributeCard
+                                label="Distance"
+                                values={currentPlanet.sy_dist
+                                    ? `${currentPlanet.sy_dist.toFixed(1)} pc`
+                                    : "Unknown"
+                                }
+                                bannable={false}
+                            />
+                        </div>
+                    )}
+
+                    <button 
+                        className="engage-button hologram-label" 
+                        onClick={getRandomPlanet} 
+                        disabled={isLoading || planetPool.length === 0}
+                    >
+                        {isLoading ? "Contacting Federation..." : "Engage"}
+                    </button>
+                </div>
+
+                <BanList banList={banList} onUnban={handleUnban}/>
+
+            </div>
+        </div>
+    );
+}
+
+export default ExoplanetStation;
