@@ -165,7 +165,7 @@ function RotatingPlanet({ color, emissive, scale, planetType, planetName }) {
                 <meshBasicMaterial
                     color={color}
                     transparent
-                    opacity={0.09}
+                    opacity={0.1}
                     side={THREE.BackSide}
                     blending={THREE.AdditiveBlending}
                     depthWrite={false}
