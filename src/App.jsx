@@ -1,5 +1,5 @@
 import ShipCanvas from "./canvas/ship";
-import FlashcardDeck from "./components/FlashcardDeck"
+import FlashcardDeck from "./stations/Flashcards/FlashcardDeck"
 import './App.css';
 
 export default function App() {
