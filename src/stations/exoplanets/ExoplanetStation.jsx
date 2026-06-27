@@ -38,7 +38,7 @@ function ExoplanetStation() {
         if (planetPool.length == 0) return;
         const validPlanets = planetPool.filter(p => p.pl_eqt && p.pl_rade);
         if (validPlanets.length === 0) return;
-        
+
         const randomIndex = Math.floor(Math.random() * planetPool.length);
         //debug
         const planet = planetPool[randomIndex];
@@ -78,6 +78,9 @@ function ExoplanetStation() {
                             color={visuals.color}
                             emissive={visuals.emissive}
                             scale={visuals.scale}
+                            planetType={visuals.planetType}
+                            atmosphereGlow={visuals.atmosphereGlow}
+                            planetName={currentPlanet.pl_name}
                         />
                     ) : (
                         <div className="planet-placeholder hologram-hint">

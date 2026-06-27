@@ -1,32 +1,65 @@
 export function getPlanetVisuals(temperature, radiusEarths) {
-    let color = "black"
-    let emissive = 0
-    let scale = 1
+    let color = "#808080";
+    let emissive = 0;
+    let scale = 1;
+    let planetType = "rocky";
+    let atmosphereGlow = "rgba(100, 150, 255, 0.25)";
 
-
-    if (temperature < 200) {
-        color = "#dff0ff"; 
-    } else if (temperature < 500) {
-        color = "#88aacc"; 
-    } else if (temperature < 799) {
-        color = "#c4a96b"; 
-    } else if (temperature < 1001) {
-        emissive = .1;
-        color = "red";
-    } else if (temperature < 5001) {
-        emissive = .3;
-        color = "orange";
-    } else if (temperature < 6501) {
-        emissive = .6;
-        color = "white"
-    } else {
-        emissive = 1;
-        color = "blue"
+    if (radiusEarths >= 10) {
+        planetType = "gas-giant";
+    } else if (radiusEarths >= 4) {
+        planetType = "ice-giant";
+    } else if (radiusEarths >= 1.5) {
+        planetType = "super-earth";
     }
 
-    scale = Math.min(Math.log(radiusEarths + 1) * 2, 2.5);
+    if (temperature < 200) {
+        color = "#c8d8e8";
+        atmosphereGlow = "rgba(180, 210, 255, 0.3)";
+    } else if (temperature < 500) {
+        color = "#8a9aaa";
+        atmosphereGlow = "rgba(140, 170, 220, 0.3)";
+    } else if (temperature < 799) {
+        color = "#a08060";
+        atmosphereGlow = "rgba(180, 140, 100, 0.3)";
+    } else if (temperature < 1001) {
+        color = "#804030";
+        emissive = 0.1;
+        atmosphereGlow = "rgba(200, 80, 40, 0.35)";
+    } else if (temperature < 5001) {
+        color = "#703020";
+        emissive = 0.3;
+        atmosphereGlow = "rgba(220, 60, 20, 0.4)";
+    } else if (temperature < 6501) {
+        color = "#c0a080";
+        emissive = 0.6;
+        atmosphereGlow = "rgba(220, 160, 80, 0.45)";
+    } else {
+        color = "#9090ff";
+        emissive = 1;
+        atmosphereGlow = "rgba(140, 140, 255, 0.5)";
+    }
 
-    return { color, emissive, scale };
+    if (planetType === "gas-giant") {
+        if (temperature < 500) {
+            color = "#c8b090";
+        } else if (temperature < 1000) {
+            color = "#b08060";
+        } else if (temperature < 2500) {
+            color = "#9a4630";
+        } else {
+            color = "#703020";
+        }
+        atmosphereGlow = "rgba(220, 90, 40, 0.35)";
+    } else if (planetType === "ice-giant") {
+        color = "#5080b0";
+        atmosphereGlow = "rgba(80, 130, 200, 0.4)";
+    }
+
+    
+    scale = Math.min(Math.log(radiusEarths + 1) * 2, 2.0);
+
+    return { color, emissive, scale, atmosphereGlow, planetType };
 }
 
 export function buildApiUrl(banList = []) {
