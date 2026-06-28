@@ -1,72 +1,62 @@
-# Web Development Project 2 - *Intergalactic Interpreter Trainer - Flashcard App*
+# Web Development Project 4 - *Stellar Cartography*
 
 Submitted by: **Daphne Blum**
 
-This web app: **An interactive flashcard application set aboard a futuristic spaceship bridge. Users can select a deck, flip cards to reveal answers, view accompanying images, and navigate through a randomized set of flashcards. The experience is presented through a custom sci-fi interface built with React Three Fiber and a fully integrated 3D environment.**
+This web app: **Stellar Cartography is an interactive space exploration experience inspired by StumbleUpon. Each click retrieves a random confirmed exoplanet from NASA's Exoplanet Archive and procedurally generates a unique 3D visualization based on its scientific properties. Users can browse the galaxy, compare planetary characteristics, and customize future discoveries through an interactive filtering system.**
 
-Time spent on part 1: **15** hours
-Time spent on part 2: **6** hours
-Time spent: **21** hours spent in total
+Time spent: **15** hours spent in total
 
 ## Required Features
 
-The following **required** functionality is completed:
+The following **required** functionality is completed: 
 
+- [X] **Application features a button that creates a new API fetch request on click and displays at least three attributes and an image obtained from the returned JSON data**
+  - The type of attribute displayed for each image should be consistent across API calls (i.e. if you are using a cat API, and display the color, breed, and age in response to an initial API call, subsequent button clicks should also result in the color, breed, and age being displayed)
+- [X] **Only one item/data from API call response is viewable at a time and at least one image is displayed per API call**
+  - A single result of an API call is displayed at a time 
+  - Displayed attributes should match the displayed image (i.e., if showing a picture of a Siamese cat and the attribute breed, the displayed breed should be 'Siamese' not 'Ragdoll' or another breed that doesn't match)
+  - There is at least one image per API call
+- [X] **API call response results should appear random to the user**
+  - Clicking on the API call button should generate a seemingly random new result each time
+  - Note: Repeat results are permitted but the API used should have a reasonably large amount of data and repeats should not be frequent
+- [X] **Clicking on a displayed value for one attribute adds it to a displayed ban **list**
+  - At least one attribute for each API result should be clickable
+  - Clicking on a clickable attribute not on the ban list, should imnmediately add it to the ban list 
+  - Clicking on an attribute in the ban list should immediately remove it from the ban list 
+- [X] **Attributes on the ban list prevent further images/API results with that attribute from being displayed**
+  - Clicking on the API call button should not result in any image/attributes with attribute values in the ban list being displayed (ex. Using a cat API, if the ban list includes the value 'Siberian' for the breed attribute, clicking on the Discover button should never result in a Siberian cat being displayed)
+  - Note: More attribute values on the ban list may result in a higher frequency of repeat results
+  -  [X] _To ensure an accurate grade, your recording **must** show that when clicked, an attribute in the ban list is immediately removed from the list of banned attributes_
 
-- [x] **The user can enter their guess into an input box *before* seeing the flipside of the card**
-  - Application features a clearly labeled input box with a submit button where users can type in a guess
-  - Clicking on the submit button with an **incorrect** answer shows visual feedback that it is wrong 
-  -  Clicking on the submit button with a **correct** answer shows visual feedback that it is correct
-- [x] **The user can navigate through an ordered list of cardss**
-  - A forward/next button displayed on the card navigates to the next card in a set sequence when clicked
-  - A previous/back button displayed on the card returns to the previous card in the set sequence when clicked
-  - Both the next and back buttons should have some visual indication that the user is at the beginning or end of the list (for example, graying out and no longer being available to click), not allowing for wrap-around navigation
 
 The following **optional** features are implemented:
 
-
-- [x] Users can use a shuffle button to randomize the order of the cards
-  - Cards should remain in the same sequence (**NOT** randomized) unless the shuffle button is clicked 
-  - Cards should change to a random sequence once the shuffle button is clicked
-- [x] A user’s answer may be counted as correct even when it is slightly different from the target answer
-  - Answers are considered correct even if they only partially match the answer on the card 
-  - Function is made to ignore particles in answer
-- [x] A counter displays the user’s current and longest streak of correct responses
-  - The current counter increments when a user guesses an answer correctly
-  - The current counter resets to 0 when a user guesses an answer incorrectly
-  - A separate counter tracks the longest streak, updating if the value of the current streak counter exceeds the value of the longest streak counter 
-- [ ] A user can mark a card that they have mastered and have it removed from the pool of displayed cards
-  - The user can mark a card to indicate that it has been mastered
-  - Mastered cards are removed from the pool of displayed cards and added to a list of mastered cards
-
+- [ ] Multiple types of attributes are clickable and can be added to the ban list
+- [ ] Users can see a stored history of their previously displayed  results from this session
+  - A dedicated section of the application displays all the previous images/attributes seen before
+  - Each time the API call button is clicked, the history updates with the newest API result
 
 The following **additional** features are implemented:
 
-* [x]  Fully integrated 3D spaceship bridge environment using React Three Fiber
-* [x]  Custom holographic card design with glow effects and sci-fi styling
-* [x]  Quiz progress tracker displaying current card number
-* [x]  Main menu screen with placeholder navigation for future Add/Edit/Delete deck management features
-* [x]  Navigation system for returning to deck selection
-* [x]Users can manually contest an auto-graded answer (flip a Correct/Incorrect     result if they believe the auto-grader made a mistake), which correctly adjusts the score and streak counters
-
+* [ ] Procedurally generated animated 3D planets created from real exoplanet data rather than static images.
+* [ ] Custom GLSL shaders for rocky planets and gas giants.
+* [ ] Dynamic planet classification that changes the visualization based on planetary characteristics (rocky vs. gas giant).
+* [ ] Animated starfield background within the display viewport.
+* [ ] Custom sci-fi interface inspired by Star Trek LCARS aesthetics and retro-futuristic design.
+* [ ] Procedurally generated animated 3D planets created from real exoplanet data rather than static images.
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented required features for part 1:
+Here's a walkthrough of implemented user stories:
 
-<img src='public/assets/flashcards.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-Here's a walkthrough of implemented required features for part 2:
-<img src='public/assets/flashcardsPt2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-GIFs created with   
-Canva
+GIF created with Canva
 
 ## Notes
-
-One of the biggest challenges was integrating a traditional flashcard application into a fully interactive 3D environment using React Three Fiber. Positioning the interface within the spaceship bridge, balancing scene lighting, and creating a sci-fi aesthetic required significant experimentation with CSS effects, camera placement, and Three.js rendering. Another challenge was ensuring that card interactions, randomized card selection, and score tracking continued to work correctly while layering React UI components over a 3D scene. Another difficulty was deciding how far to go with the "contest" feature's effect on the longest streak: fully reversing a longest-streak update after a contested answer would require storing a history of every streak change rather than just its current value, which felt like more complexity than the feature warranted given the timeline. Instead, the longest streak is treated as a record of the best the user has legitimately demonstrated — contesting an answer can still correct the current streak and score going forward, but a longest-streak milestone, once reached, stays recorded even if a later answer that contributed to it is corrected.
-
-
+-The NASA Exoplanet Archive does not provide images for confirmed exoplanets. Rather than substituting an unrelated image dataset, this application procedurally generates a unique 3D planet directly from the JSON data returned by the API. Scientific attributes such as planetary radius and equilibrium temperature are used to determine the planet's classification, scale, color palette, atmospheric effects, and surface appearance. As a result, every API response produces a unique visualization that is derived from the returned data instead of relying on pre-rendered images.
+-This repository serves as an evolving project rather than a collection of separate assignment repositories. Each new CodePath assignment is implemented by extending the existing application, with the goal of gradually building a larger, unified interactive experience. All required functionality for the current assignment is included while preserving features developed in previous assignments.
 ## License
 
     Copyright 2026 Daphne Blum
