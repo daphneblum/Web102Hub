@@ -39,7 +39,7 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 * [X] Procedurally generated animated 3D planets created from real exoplanet data rather than static images.
-* [X] Custom GLSL shaders for rocky planets and gas giants.
+* [X] Custom GLSL shaders for gas giants.
 * [X] Dynamic planet classification that changes the visualization based on planetary characteristics (rocky vs. gas giant).
 * [X] Animated starfield background within the display viewport.
 * [X] Custom sci-fi interface inspired by Star Trek LCARS aesthetics and retro-futuristic design.
