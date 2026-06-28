@@ -152,6 +152,8 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 .ban-entry {
@@ -180,4 +182,54 @@
     text-shadow: 0 0 8px rgba(255, 80, 80, 0.5);
     font-size: 13px;
     text-align: center;
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 180px;
+    flex-shrink: 0;
+    max-height: 80vh;
+}
+
+.history-panel {
+    padding: 16px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.history-entry {
+    font-size: 11px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(120, 200, 255, 0.15);
+    letter-spacing: 0.5px;
+}
+
+.history-entry-current {
+    border-color: rgba(120, 200, 255, 0.4);
+    color: rgba(180, 230, 255, 0.9) !important;
+}
+
+.ban-field-label {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 2px;
 }

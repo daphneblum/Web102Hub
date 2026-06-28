@@ -31,19 +31,19 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] Multiple types of attributes are clickable and can be added to the ban list
-- [ ] Users can see a stored history of their previously displayed  results from this session
+- [X] Multiple types of attributes are clickable and can be added to the ban list
+- [X] Users can see a stored history of their previously displayed  results from this session
   - A dedicated section of the application displays all the previous images/attributes seen before
   - Each time the API call button is clicked, the history updates with the newest API result
 
 The following **additional** features are implemented:
 
-* [ ] Procedurally generated animated 3D planets created from real exoplanet data rather than static images.
-* [ ] Custom GLSL shaders for rocky planets and gas giants.
-* [ ] Dynamic planet classification that changes the visualization based on planetary characteristics (rocky vs. gas giant).
-* [ ] Animated starfield background within the display viewport.
-* [ ] Custom sci-fi interface inspired by Star Trek LCARS aesthetics and retro-futuristic design.
-* [ ] Procedurally generated animated 3D planets created from real exoplanet data rather than static images.
+* [X] Procedurally generated animated 3D planets created from real exoplanet data rather than static images.
+* [X] Custom GLSL shaders for rocky planets and gas giants.
+* [X] Dynamic planet classification that changes the visualization based on planetary characteristics (rocky vs. gas giant).
+* [X] Animated starfield background within the display viewport.
+* [X] Custom sci-fi interface inspired by Star Trek LCARS aesthetics and retro-futuristic design.
+
 
 ## Video Walkthrough
 
@@ -56,7 +56,7 @@ GIF created with Canva
 
 ## Notes
 -The NASA Exoplanet Archive does not provide images for confirmed exoplanets. Rather than substituting an unrelated image dataset, this application procedurally generates a unique 3D planet directly from the JSON data returned by the API. Scientific attributes such as planetary radius and equilibrium temperature are used to determine the planet's classification, scale, color palette, atmospheric effects, and surface appearance. As a result, every API response produces a unique visualization that is derived from the returned data instead of relying on pre-rendered images.
--This repository serves as an evolving project rather than a collection of separate assignment repositories. Each new CodePath assignment is implemented by extending the existing application, with the goal of gradually building a larger, unified interactive experience. All required functionality for the current assignment is included while preserving features developed in previous assignments.
+-- This project is built within a larger evolving codebase that also contains a previously submitted flashcard application (Web Development Project 2/3). The flashcard station is currently not accessible from this project's interface — navigation between stations is a planned feature that will be implemented after submission. The shared codebase approach was chosen to avoid re-uploading a large 3D model file (127MB, stored via Git LFS) across multiple repositories.
 ## License
 
     Copyright 2026 Daphne Blum

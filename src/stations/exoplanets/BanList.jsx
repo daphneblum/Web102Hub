@@ -1,23 +1,32 @@
 
 import "../../Hologram.css"
 
+const FIELD_LABELS = {
+    discoverymethod: "Discovery Method",
+    hostname: "Host Star",
+    disc_year: "Year Discovered",
+};
+
 function BanList({ banList, onUnban}) {
+    const allBans = Object.entries(banList).flatMap(([field, values]) => values.map(value => ({ field, value })));
+
     return (
         <div className="ban-list-panel hologram">
-            <h3 className="hologram-label">Banned Discovery Methods</h3>
+            <h3 className="hologram-label">Banned Attributes</h3>
             <p className="hologram-hint">Click any entry to remove the ban</p>
 
-            {banList.length === 0 ? (
-                <p className="ban-empty hologram-hint">No restrictions active - all discovery methods permitted</p>
+            {allBans.length === 0 ? (
+                <p className="ban-empty hologram-hint">No restrictions active</p>
             ) : (
                 <ul className="ban-entries">
-                    {banList.map(method => (
+                    {allBans.map(({ field, value }) => (
                         <li
-                            keys={method}
+                            keys={`${field}-${value}`}
                             className="ban-entry hologram-text"
-                            onClick={() => onUnban(method)}
+                            onClick={() => onUnban(field, value)}
                         >
-                            🚫 {method}
+                            <span className="ban-field-label">{FIELD_LABELS[field]}</span>
+                            🚫 {value}
                         </li>
                     ))}
                 </ul>

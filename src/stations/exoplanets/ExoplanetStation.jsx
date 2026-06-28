@@ -9,12 +9,17 @@ import "../../Hologram.css";
 function ExoplanetStation() {
     const [planetPool, setPlanetPool] = useState([]);
     const [currentPlanet, setCurrentPlanet] = useState(null);
-    const [banList, setBanList] = useState([]);
+    const [banList, setBanList] = useState({
+        discoverymethod: [],
+        hostname: [],
+        disc_year: [],
+    });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [history, setHistory] = useState([]);
 
     useEffect(() => {
-        fetchPlanetPool([])
+        fetchPlanetPool({ discoverymethod: [], hostname: [], disc_year: [] });
     }, []);
 
     async function fetchPlanetPool(currentBanList) {
@@ -41,21 +46,28 @@ function ExoplanetStation() {
 
         const randomIndex = Math.floor(Math.random() * planetPool.length);
         //debug
-        const planet = planetPool[randomIndex];
-        console.log(planet); 
+        // const planet = planetPool[randomIndex];
+        // console.log(planet); 
         //debug ^
-        setCurrentPlanet(planetPool[randomIndex]);
+        const planet = validPlanets[randomIndex];
+        setCurrentPlanet(planet);
+
+        setHistory(prev => {
+            const alreadyInHistory = prev.some(p => p.pl_name === planet.pl_name);
+            if (alreadyInHistory) return prev;
+            return [planet, ...prev];
+        });
     }
 
-    function handleBan(value) {
-        if (banList.includes(value)) return;
-        const newBanList = [...banList,value];
+    function handleBan(field, value) {
+        if (banList[field]?.includes(value)) return;
+        const newBanList = {...banList, [field]: [...(banList[field] || []), value],};
         setBanList(newBanList);
         fetchPlanetPool(newBanList);
     }
 
-    function handleUnban(value) {
-        const newBanList = banList.filter(item => item !== value);
+    function handleUnban(field, value) {
+        const newBanList = {...banList, [field]: banList[field].filter(v => v !== value)};
         setBanList(newBanList);
         fetchPlanetPool(newBanList);
     }
@@ -98,18 +110,22 @@ function ExoplanetStation() {
                             <AttributeCard
                                 label="Host Star"
                                 value={currentPlanet.hostname}
-                                bannable={false}
+                                isBanned={banList.hostname.includes(currentPlanet.hostname)}
+                                onBan={() => handleBan('hostname', currentPlanet.hostname)}
+                                bannable={true}
                             />
                             <AttributeCard
                                 label="Discovery Method"
                                 value={currentPlanet.discoverymethod}
-                                isBanned={banList.includes(currentPlanet.discoverymethod)}
-                                onBan={() => handleBan(currentPlanet.discoverymethod)}
+                                isBanned={banList.discoverymethod.includes(currentPlanet.discoverymethod)}
+                                onBan={() => handleBan('discoverymethod', currentPlanet.discoverymethod)}
                                 bannable={true}
                             /><AttributeCard
                                 label="Year Discovered"
                                 value={currentPlanet.disc_year}
-                                bannable={false}
+                                isBanned={banList.disc_year.includes(currentPlanet.disc_year)}
+                                onBan={() => handleBan('disc_year', currentPlanet.disc_year)}
+                                bannable={true}
                             />
                             <AttributeCard
                                 label="Orbital Period"
@@ -146,7 +162,23 @@ function ExoplanetStation() {
                     </button>
                 </div>
 
-                <BanList banList={banList} onUnban={handleUnban}/>
+                <div className="right-panel">
+                    <BanList banList={banList} onUnban={handleUnban}/>
+
+                    {history.length > 0 && (
+                        <div className="history-panel hologram">
+                            <h3 className="hologram-label">Mission Log</h3>
+                            <ul className="history-list">
+                                {history.map((planet, index) => (
+                                    <li key={planet.pl_name} className={`history-entry hologram-hint ${index === 0 ? 'history-entry-current' : ''}`}>
+                                        {planet.pl_name}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </div>
+                    
 
             </div>
         </div>

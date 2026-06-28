@@ -65,11 +65,19 @@ export function getPlanetVisuals(temperature, radiusEarths) {
 export function buildApiUrl(banList = []) {
     const baseUrl = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync";
 
-    const bannedConditions = banList.map(
-        method => `discoverymethod!='${method}'`
-    ).join("+and+");
+    const bannedConditions = [];
 
-    const banFilter = bannedConditions.length > 0 ? `+and+${bannedConditions}` : "";
+    if (banList.discoverymethod?.length > 0) {
+        banList.discoverymethod.forEach(v => bannedConditions.push(`discoverymethod!='${v}'`));
+    }
+    if (banList.hostname?.length > 0) {
+        banList.hostname.forEach(v => bannedConditions.push(`hostname!='${v}'`));
+    }
+    if (banList.disc_year?.length > 0) {
+        banList.disc_year.forEach(v => bannedConditions.push(`disc_year!='${v}'`));
+    }
+
+    const banFilter = bannedConditions.length > 0 ? `+and+${bannedConditions.join("+and+")}` : "";
 
     const query = `select+pl_name,hostname,discoverymethod,disc_year,pl_orbper,pl_rade,pl_eqt,pl_bmasse,sy_dist+from+pscomppars+where+pl_eqt+is+not+null+and+pl_rade+is+not+null${banFilter}&format=json&maxrec=300`;
     const nasaUrl = `${baseUrl}?query=${query}`;
