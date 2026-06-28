@@ -56,7 +56,8 @@ GIF created with Canva
 
 ## Notes
 -The NASA Exoplanet Archive does not provide images for confirmed exoplanets. Rather than substituting an unrelated image dataset, this application procedurally generates a unique 3D planet directly from the JSON data returned by the API. Scientific attributes such as planetary radius and equilibrium temperature are used to determine the planet's classification, scale, color palette, atmospheric effects, and surface appearance. As a result, every API response produces a unique visualization that is derived from the returned data instead of relying on pre-rendered images.
--- This project is built within a larger evolving codebase that also contains a previously submitted flashcard application (Web Development Project 2/3). The flashcard station is currently not accessible from this project's interface — navigation between stations is a planned feature that will be implemented after submission. The shared codebase approach was chosen to avoid re-uploading a large 3D model file (127MB, stored via Git LFS) across multiple repositories.
+
+-This project is built within a larger evolving codebase that also contains a previously submitted flashcard application (Web Development Project 2/3). The flashcard station is currently not accessible from this project's interface; navigation between stations is a planned feature that will be implemented after submission. The shared codebase approach was chosen to avoid re-uploading a large 3D model file (127MB, stored via Git LFS) across multiple repositories.
 ## License
 
     Copyright 2026 Daphne Blum
