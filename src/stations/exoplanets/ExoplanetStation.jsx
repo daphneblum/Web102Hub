@@ -19,14 +19,14 @@ function ExoplanetStation() {
     const [history, setHistory] = useState([]);
 
     useEffect(() => {
-        fetchPlanetPool({ discoverymethod: [], hostname: [], disc_year: [] });
+        fetchPlanetPool();
     }, []);
 
-    async function fetchPlanetPool(currentBanList) {
+    async function fetchPlanetPool() {
         setIsLoading(true);
         setError(null);
         try {
-            const url = buildApiUrl(currentBanList);
+            const url = buildApiUrl();
             const response = await fetch(url);
             if (!response.ok) throw new Error("Failed to fetch planet data");
             const data = await response.json();
@@ -39,17 +39,33 @@ function ExoplanetStation() {
         }
     }
 
-    function getRandomPlanet() {
-        if (planetPool.length == 0) return;
-        const validPlanets = planetPool.filter(p => p.pl_eqt && p.pl_rade);
-        if (validPlanets.length === 0) return;
+    function getFilteredPlanets() {
+        return planetPool.filter(planet => {
+            if (banList.discoverymethod.includes(String(planet.discoverymethod))) return false;
+            if (banList.hostname.includes(String(planet.hostname))) return false;
+            if (banList.disc_year.includes(String(planet.disc_year))) return false;
 
-        const randomIndex = Math.floor(Math.random() * validPlanets.length);
-        //debug
-        // const planet = planetPool[randomIndex];
-        // console.log(planet); 
-        //debug ^
-        const planet = validPlanets[randomIndex];
+            return planet.pl_eqt != null && planet.pl_rade != null;
+        });
+    }
+
+    function getRandomPlanet() {
+        const filteredPlanets = getFilteredPlanets();
+
+        if (filteredPlanets.length == 0) {
+            setError("No matching planets found. Remove a ban or refresh the database.");
+            return;
+        }
+
+        const availablePlanets = 
+            currentPlanet && filteredPlanets.length > 1
+                ? filteredPlanets.filter(p => p.pl_name !== currentPlanet.pl_name)
+                : filteredPlanets;
+            
+        const randomIndex = Math.floor(Math.random() * availablePlanets.length);
+        const planet = availablePlanets[randomIndex];
+
+        setError(null);
         setCurrentPlanet(planet);
 
         setHistory(prev => {
@@ -61,15 +77,17 @@ function ExoplanetStation() {
 
     function handleBan(field, value) {
         if (banList[field]?.includes(value)) return;
-        const newBanList = {...banList, [field]: [...(banList[field] || []), value],};
-        setBanList(newBanList);
-        fetchPlanetPool(newBanList);
+        setBanList(prev => ({
+            ...prev,
+            [field]: [...(prev[field] || []), value],
+        }));
     }
 
     function handleUnban(field, value) {
-        const newBanList = {...banList, [field]: banList[field].filter(v => v !== value)};
-        setBanList(newBanList);
-        fetchPlanetPool(newBanList);
+        setBanList(prev => ({
+            ...prev,
+            [field]: prev[field].filter(v => v !== value),
+        }));
     }
 
     const visuals = currentPlanet ? getPlanetVisuals(currentPlanet.pl_eqt, currentPlanet.pl_rade) : null;
