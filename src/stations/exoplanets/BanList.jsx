@@ -21,7 +21,7 @@ function BanList({ banList, onUnban}) {
                 <ul className="ban-entries">
                     {allBans.map(({ field, value }) => (
                         <li
-                            keys={`${field}-${value}`}
+                            key={`${field}-${value}`}
                             className="ban-entry hologram-text"
                             onClick={() => onUnban(field, value)}
                         >

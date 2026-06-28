@@ -44,7 +44,7 @@ function ExoplanetStation() {
         const validPlanets = planetPool.filter(p => p.pl_eqt && p.pl_rade);
         if (validPlanets.length === 0) return;
 
-        const randomIndex = Math.floor(Math.random() * planetPool.length);
+        const randomIndex = Math.floor(Math.random() * validPlanets.length);
         //debug
         // const planet = planetPool[randomIndex];
         // console.log(planet); 
