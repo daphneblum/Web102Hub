@@ -1,6 +1,7 @@
 import ShipCanvas from "./canvas/ship";
 import FlashcardDeck from "./stations/Flashcards/FlashcardDeck";
 import ExoplanetStation from "./stations/exoplanets/ExoplanetStation";
+import EarthStatusDashboard from "./stations/database/EarthStatusDashboard";
 import './App.css';
 
 export default function App() {
@@ -9,7 +10,8 @@ export default function App() {
       <ShipCanvas />
       <div className="overlay">
         {/* <FlashcardDeck /> */}
-        <ExoplanetStation />
+        {/* <ExoplanetStation /> */}
+        <EarthStatusDashboard />
       </div>
   </div>
   );
