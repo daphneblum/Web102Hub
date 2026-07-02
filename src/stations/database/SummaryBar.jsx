@@ -2,22 +2,22 @@ import { use, useMemo } from "react";
 
 //considering adding LLM integration for summarizing conflict data, but for now, this component will just display a summary bar with key metrics.
 
-function summaryBar ({ articles = []} ) {
+function summaryBar ({ events = []} ) {
     const stats = useMemo(() => {
-        if (!articles.length) {
+        if (!events.length) {
             return { total: 0, topCountry: "-", latest: "-" };
         }
 
         const counts = {};
-        articles.forEach((a) => {
+        events.forEach((a) => {
             if (a.sourcecountry) counts[a.sourcecountry] = (counts[a.sourcecountry] || 0) + 1;
         });
 
         const topCountry = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
-        const latest = articles.map((a) => a.seendate).filter(Boolean).sort().reverse()[0];
+        const latest = events.map((a) => a.seendate).filter(Boolean).sort().reverse()[0];
 
-        return { total: articles.length, topCountry, latest: latest ? `${latest.slice(0, 4)}-${latest.slice(4,6)}-${latest.slice(6,8)}` : "-", };
-    }, [articles]);
+        return { total: events.length, topCountry, latest: latest ? `${latest.slice(0, 4)}-${latest.slice(4,6)}-${latest.slice(6,8)}` : "-", };
+    }, [events]);
 
     return (
         <div className="summary-bar">
@@ -49,4 +49,4 @@ function summaryBar ({ articles = []} ) {
     );
 }
 
-export default summaryBar;
+export default SummaryBar;

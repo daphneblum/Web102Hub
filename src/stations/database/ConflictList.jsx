@@ -1,22 +1,22 @@
 import { useMemo, useState } from "react";
 
 
-function ConflictList({ articles = [] }) {
+function ConflictList({ events = [] }) {
     const [search, setSearch] = useState("");
     const [countryFilter, setCountryFilter] = useState("all");
 
     const countries = useMemo(() => {
-        const set = new Set(articles.map((a) => a.sourcecountry).filter(Boolean));
+        const set = new Set(events.map((a) => a.category).filter(Boolean));
         return ["all", ...Array.from(set).sort()];
-    }, [articles]);
+    }, [events]);
 
     const filtered = useMemo(() => {
-        return articles.filter((a) => {
+        return events.filter((a) => {
             const matchesSearch = !search.trim() || a.title?.toLowerCase().includes(search.trim().toLowerCase());
-            const matchesCountry = countryFilter === "all" || a.sourcecountry === countryFilter;
-            return matchesSearch && matchesCountry;
+            const matchesCategory = categoryFilter === "all" || a.category === countryFilter;
+            return matchesSearch && matchesCategory;
         });
-    }, [articles, search, countryFilter]);
+    }, [events, search, categoryFilter]);
 
     return (
         <div className="conflict-list">
@@ -30,13 +30,13 @@ function ConflictList({ articles = [] }) {
                 />
 
                 <select 
-                value={countryFilter} 
-                onChange={(e) => setCountryFilter(e.target.value)}
+                value={categoryFilter} 
+                onChange={(e) => setCategoryFilter(e.target.value)}
                 className="conflict-list__filter"
                 >
                     {countries.map((c) => (
                         <option key={c} value={c}>
-                            {c === "all" ? "All Countries" : c}
+                            {c === "all" ? "All Categories" : c}
                         </option>
                     ))}
                 </select>
@@ -48,22 +48,20 @@ function ConflictList({ articles = [] }) {
                         No reports found. Try adjusting your search or filter criteria.
                     </p>
                 )}
-                {filtered.map((a, i) => (
-                    <a
-                        key={i}
-                        href={a.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="conflict-list__row"
-                    >
-                        <span className="conflict-list__title">
-                            {a.title}
-                        </span>
-                        <span>
-                            {a.sourcecountry || "Unknown"} - {a.seendate?.slice(0, 8)}
-                        </span>
-                    </a>
-                ))}
+                {filtered.map((e, i) => {
+                    const Row = e.url ? "a" : "div";
+                    const rowProps = e.url ? { href: e.url, target: "_blank", rel: "noopener noreferrer" } : {};
+                    return (
+                        <Row key={i} {...rowProps} className="conflict-list__row">
+                            <span className="conflict-list__title">
+                                {e.title}
+                            </span>
+                            <span>
+                                {e.country || "Unknown"} - {e.date} - {e.category}
+                            </span>
+                        </Row>
+                    );
+                })}
             </div>
         </div>
     );
