@@ -24,7 +24,7 @@ function EarthStatusDashboard() {
     const { articles, points, loading, error } = useGdeltData(debouncedTopic);
 
     return (
-        <div className='earth-status'>
+        <div className='earth-status hologram'>
             <header className='earth-status__header'>
                 <h1>Earth Status Dashboard</h1>
                 <input 
@@ -51,7 +51,9 @@ function EarthStatusDashboard() {
                 </div>
             </div>
 
-            <SummaryBar articles={articles} />
+            <div className='earth-status__summary'>
+                <SummaryBar articles={articles} />
+            </div>
         </div>
     );
 }

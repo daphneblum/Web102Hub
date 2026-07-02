@@ -16,11 +16,13 @@ function useGdeltData(query) {
 
             const safeQuery = query?.trim() || "armed conflict";
 
-            const docUrl = `https://api.gdeltproject.org/api/v2/doc/doc?query=${encodeURIComponent(safeQuery)}` +
-                            `&mode=artlist&maxrecords=75&format=json&sort=hybridrel&timespan=3d`;
+            const docUrl =
+            `/gdelt/api/v2/doc/doc?query=${encodeURIComponent(safeQuery)}` +
+            `&mode=artlist&maxrecords=25&format=json&sort=hybridrel&timespan=3d`;
 
-            const geoUrl = `https://api.gdeltproject.org/api/v2/geo/geo?query=${encodeURIComponent(safeQuery)}` +
-                            `&format=geojson&timespan=3d`;
+            const geoUrl =
+            `/gdelt/api/v2/geo/geo?query=${encodeURIComponent(safeQuery)}` +
+            `&mode=PointData&format=GeoJSON&timespan=3d`;
 
             try {
                 const [docRes, geoRes] = await Promise.all([
