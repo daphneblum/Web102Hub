@@ -13,7 +13,7 @@ function ConflictList({ events = [] }) {
     const filtered = useMemo(() => {
         return events.filter((a) => {
             const matchesSearch = !search.trim() || a.title?.toLowerCase().includes(search.trim().toLowerCase());
-            const matchesCategory = categoryFilter === "all" || a.category === countryFilter;
+            const matchesCategory = categoryFilter === "all" || a.category === categoryFilter;
             return matchesSearch && matchesCategory;
         });
     }, [events, search, categoryFilter]);

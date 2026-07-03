@@ -91,7 +91,7 @@ function EarthGlobe({ events = [] }) {
             </mesh>
 
             {markers.map((m, i) => (
-                <ConflictMarker key={i} position={m.position} intensity={m.intensity} />
+                <ConflictMarker key={i} position={m.position} color={m.color} size={m.size} />
             ))}
         </group>
     );
