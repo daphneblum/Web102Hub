@@ -5,6 +5,16 @@ import { useTexture } from "@react-three/drei";
 
 const RADIUS = 1.6;
 
+const CATEGORY_COLORS = {
+    Protests: "#ffd700",
+    Battles: "#ff2d95", 
+    "Explosions/Remote violence": "#ff4d1a",
+    "Violence against civilians": "#ff0033",
+    "Strategic developments": "#a259ff",
+};
+
+const DEFAULT_COLOR = "#a259ff";
+
 //convert lat/lon to 3D coordinates
 function latLongToVector3(lat, lon, radius) {
     const phi = (90 - lat) * (Math.PI / 180);
@@ -17,11 +27,7 @@ function latLongToVector3(lat, lon, radius) {
     return new THREE.Vector3(x, y, z);
 }
 
-function ConflictMarker({ position, intensity }) {
-    //intensity determines color and size of marker
-    const color = intensity > 0.66 ? "#ffd700" : intensity > 0.33 ? "#ff2d95" : "#a259ff";
-    const size = 0.02 + intensity * 0.035;
-
+function ConflictMarker({ position, color, size }) {
     return (
         <mesh position={position}>
             <sphereGeometry args={[size, 12, 12]} />
@@ -31,28 +37,22 @@ function ConflictMarker({ position, intensity }) {
     );
 }
 
-function EarthGlobe({ points = [] }) {
+function EarthGlobe({ events = [] }) {
     const globeRef = useRef();
-    const earthMap = useTexture("assets/earthmap4k.jpg");
+    const earthMap = useTexture("/assets/earthmap4k.jpg");
 
     const markers = useMemo(() => {
-        if (!points.length) return [];
-
-        const counts = points.map((f) => f.properties?.count ?? 1);
-        const max = Math.max(...counts, 1);
-
-        return points.map((feature) => {
-            const [lon, lat] = feature.geometry.coordinates || [];
-            if (lat == null || lon == null) return null;
-            const count = feature.properties?.count ?? 1;
+        return events
+        .filter((e) => e.lat != null && e.lng != null)
+        .map((e) => {
+            const sig = typeof e.sig === "number" ? e.sig : 0.2;
             return {
-                position: latLongToVector3(lat, lon, RADIUS + 0.01),
-                intensity: count / max,
-                name: feature.properties?.name || "Unknown",
+                position: latLongToVector3(e.lat, e.lng, RADIUS + 0.01),
+                color: CATEGORY_COLORS[e.category] || DEFAULT_COLOR,
+                size: 0.02 + Math.min(sig, 1) * 0.035,
             };
-        })
-        .filter(Boolean);
-    }, [points]);
+        });
+    }, [events]);
 
     useFrame((_, delta) => {
         if (globeRef.current) globeRef.current.rotation.y += delta * 0.05;

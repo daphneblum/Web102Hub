@@ -2,7 +2,7 @@ import { use, useMemo } from "react";
 
 //considering adding LLM integration for summarizing conflict data, but for now, this component will just display a summary bar with key metrics.
 
-function summaryBar ({ events = []} ) {
+function SummaryBar ({ events = []} ) {
     const stats = useMemo(() => {
         if (!events.length) {
             return { total: 0, topCountry: "-", latest: "-" };

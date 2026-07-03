@@ -3,9 +3,13 @@ import { Canvas } from '@react-three/fiber';
 import EarthGlobe from './EarthGlobe';
 import ConflictList from './ConflictList';
 import SummaryBar from './SummaryBar';
-import useGdeltData from "./useGdeltData";
 import "./EarthStatusDashboard.css";
+import mockEvents from "./mockEvents"
+import useConflictEvents from './useConflictEvents';
 
+//this is to avoid using up free queries while iterating
+const USE_MOCK_DATA = true;
+const CATEGORY_OPTIONS = ["Protests", "Battles", "Explosions/Remote violence"];
 
 function useDebouncedValue(value, delay = 500) {
     const [debounced, setDebounced] = useState(value);

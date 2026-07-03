@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 
 function ConflictList({ events = [] }) {
     const [search, setSearch] = useState("");
-    const [countryFilter, setCountryFilter] = useState("all");
+    const [categoryFilter, setCategoryFilter] = useState("all");
 
     const countries = useMemo(() => {
         const set = new Set(events.map((a) => a.category).filter(Boolean));
