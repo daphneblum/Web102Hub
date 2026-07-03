@@ -5,7 +5,7 @@ const mockEvents = [
     subcategory: "Peaceful protest",
     date: "2026-07-02",
     country: "Israel",
-    headline:
+    title:
       "Israel protests demand probe after October 7 security failures as Hamas attack marked",
     actor: "Protesters",
     goldstein: -6.5,
@@ -19,7 +19,7 @@ const mockEvents = [
     subcategory: "Peaceful protest",
     date: "2026-07-02",
     country: "Pakistan",
-    headline: "PoK leader claims Pakistan Army armed Kashmiris amid Rawalakot protests",
+    title: "PoK leader claims Pakistan Army armed Kashmiris amid Rawalakot protests",
     actor: "Protesters",
     goldstein: -6.5,
     mag: 0.0,
@@ -32,7 +32,7 @@ const mockEvents = [
     subcategory: "Protest with intervention",
     date: "2026-07-01",
     country: "Peru",
-    headline: "Protest blockade cuts water to Ilo after Tacna communeros block Ite intake",
+    title: "Protest blockade cuts water to Ilo after Tacna communeros block Ite intake",
     actor: "Communeros of Cambaya, Coraguaya, Camilaca, Vilalaca and Santa Cruz",
     goldstein: -7.5,
     mag: 0.0,

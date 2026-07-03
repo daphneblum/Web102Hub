@@ -53,12 +53,10 @@ function ConflictList({ events = [] }) {
                     const rowProps = e.url ? { href: e.url, target: "_blank", rel: "noopener noreferrer" } : {};
                     return (
                         <Row key={i} {...rowProps} className="conflict-list__row">
-                            <span className="conflict-list__title">
-                                {e.title}
-                            </span>
-                            <span>
-                                {e.country || "Unknown"} - {e.date} - {e.category}
-                            </span>
+                           <div>
+                                <span className="conflict-list__location">{e.country || "Unknown"} - {e.date} - {e.category}</span>
+                            </div>
+                           
                         </Row>
                     );
                 })}

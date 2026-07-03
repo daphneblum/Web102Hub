@@ -22,8 +22,19 @@ function useConflictEvents(filters = {}) {
                     const errBody = await res.json().catch(() => ({}));
                     throw new Error(errBody.error || `Request failed (${res.status})`);
                 }
-                const data = await res.json();
-                if (cancelled) return;
+                const normalizedEvents = (data.data || []).map(item => ({
+                // GDELT often uses 'sourceurl' or 'url' for links
+                url: item.sourceurl || item.url || null, 
+                
+                // GDELT properties might use 'action_text', 'headline', or 'event_type'
+                // Log your raw item to console if you need to double check their keys!
+                title: item.headline || item.story_title || "Global Conflict Event",
+                country: item.country_name || item.country || "Global",
+                date: item.date_added || item.date || new Date().toISOString().slice(0,10),
+                category: item.category || filters.category || "General"
+            }));
+
+            setEvents(normalizedEvents);
 
                 setEvents(data.data || []);
             } catch (err) {

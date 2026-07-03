@@ -1,50 +1,30 @@
-import { use, useMemo } from "react";
+import { useMemo } from "react";
 
-//considering adding LLM integration for summarizing conflict data, but for now, this component will just display a summary bar with key metrics.
-
-function SummaryBar ({ events = []} ) {
+function SummaryBar({ events = [] }) {
     const stats = useMemo(() => {
         if (!events.length) {
-            return { total: 0, topCountry: "-", latest: "-" };
+            return { total: 0, topCountry: "-", latestHeadline: "No active threats detected globally." };
         }
 
         const counts = {};
         events.forEach((a) => {
-            if (a.sourcecountry) counts[a.sourcecountry] = (counts[a.sourcecountry] || 0) + 1;
+            const countryKey = a.country || "-";
+            if (countryKey !== "-") {
+                counts[countryKey] = (counts[countryKey] || 0) + 1;
+            }
         });
 
         const topCountry = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
-        const latest = events.map((a) => a.seendate).filter(Boolean).sort().reverse()[0];
+        const latestHeadline = events[0]?.title || "No active threats detected.";
 
-        return { total: events.length, topCountry, latest: latest ? `${latest.slice(0, 4)}-${latest.slice(4,6)}-${latest.slice(6,8)}` : "-", };
+        return { total: events.length, topCountry, latestHeadline };
     }, [events]);
 
     return (
-        <div className="summary-bar">
-            <div className="summary-bar__stat">
-                <span className="summary-bar__value">
-                    {stats.total}
-                </span>
-                <span className="summary-bar__label">
-                    Total Reports (72h)
-                </span>
-            </div>
-            <div className="summary-bar__stat">
-                <span className="summary-bar__value">
-                    {stats.topCountry}
-                </span>
-                <span className="summary-bar__label">
-                    Most Active Region
-                </span>
-            </div>
-            <div className="summary-bar__stat">
-                <span className="summary-bar__value">
-                    {stats.latest}
-                </span>
-                <span className="summary-bar__label">
-                    Latest Report
-                </span>
-            </div>
+        <div className="summary-terminal">
+            <p className="summary-terminal__text">
+                <span className="summary-terminal__status-tag">&gt; SYSTEM STATUS LOG:</span> A total of <span className="summary-terminal__metric">{stats.total} REPORT(S)</span> have been logged within the active 72-hour matrix. Telemetry analysis indicates that the most critical sector activity is currently concentrated in <span className="summary-terminal__metric">{stats.topCountry.toUpperCase()}</span>. The latest intelligence dispatch reports: <span className="summary-terminal__headline">"{stats.latestHeadline}"</span>
+            </p>
         </div>
     );
 }
