@@ -13,9 +13,10 @@ Time spent: **18** hours spent in total
   - The dashboard should display at least 10 unique items, one per row
   - The dashboard includes at least two features in each row
 - [X] **`useEffect` React hook and `async`/`await` are used**
-- [X] **The app dashboard includes at least three summary statistics about the data** 
-  - The app dashboard includes at least three summary statistics about the data, such as:
-    - *insert details here*
+- [X] **The app dashboard includes at least three summary statistics about the data** - The app dashboard tracks critical system telemetry metrics:
+    - **Total Matrix Threat Log:** The total count of active filtered crisis reports matching current query parameters.
+    - **High-Volatility Concentration Sector:** Calculates the specific country or region containing the highest frequency of logging events.
+    - **Latest Live Intelligence Dispatch:** Displays the most recent headline text stream pulled from the satellite data layer.
 - [X] **A search bar allows the user to search for an item in the fetched data**
   - The search bar **correctly** filters items in the list, only displaying items matching the search query
   - The list of results dynamically updates as the user types into the search bar
@@ -57,7 +58,9 @@ GIF created with Canva
 -To begin this project, I started with a mockup of the app in Figma:
 <img src='/public/assets/database-mockup.png' alt='drafted mockup of UI made in Figma'>
 
--TThe primary struggle with this project was dealing with major API limitations and data restrictions. Initially, the project was supposed to use the standard, free GDELT API, but it couldn't provide the structured data needed for the dashboard. This forced a pivot to GDELT Cloud, which required an API key and meant creating a backend proxy using Next.js and Vercel to securely hide that key from the frontend. Even after switching, filtering and retrieving the correct categories proved difficult. While I successfully connected and retrieved the correct data, the final trade-off is that it requires making four separate API calls every time the data syncs, which quickly uses up a very limited number of API credits. For this reason, when not needed for live demos, mock data that is hard-coded in the mockEvents.js file is used instead of the live API data. 
+-The primary struggle with this project was dealing with major API limitations and data restrictions. Initially, the project was supposed to use the standard, free GDELT API, but it couldn't provide the structured data needed for the dashboard. This forced a pivot to GDELT Cloud, which required an API key and meant creating a backend proxy using Next.js and Vercel to securely hide that key from the frontend. Even after switching, filtering and retrieving the correct categories proved difficult. While I successfully connected and retrieved the correct data, the final trade-off is that it requires making four separate API calls every time the data syncs, which quickly uses up a very limited number of API credits. For this reason, when not needed for live demos, mock data that is hard-coded in the mockEvents.js file is used instead of the live API data.
+
+-This project is a growing collection of previous projects for CodePath WEB102. The goal is to eventually make this a completely interactive environment with users able to move between different stations aboard the ship and interact with each project. As such, there currently inaccessible components (expoplanet app and flashcard app) in the code that will be reimplemented at a later date.
 ## License
 
     Copyright 2026 Daphne Blum
