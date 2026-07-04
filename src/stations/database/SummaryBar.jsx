@@ -23,7 +23,10 @@ function SummaryBar({ events = [] }) {
     return (
         <div className="summary-terminal">
             <p className="summary-terminal__text">
-                <span className="summary-terminal__status-tag">&gt; SYSTEM STATUS LOG:</span> A total of <span className="summary-terminal__metric">{stats.total} REPORT(S)</span> have been logged within the active 72-hour matrix. Telemetry analysis indicates that the most critical sector activity is currently concentrated in <span className="summary-terminal__metric">{stats.topCountry.toUpperCase()}</span>. The latest intelligence dispatch reports: <span className="summary-terminal__headline">"{stats.latestHeadline}"</span>
+                <span className="summary-terminal__status-tag">
+                    <span className="summary-terminal__cursor">&gt;</span> SYSTEM STATUS LOG:
+                </span> 
+                A total of <span className="summary-terminal__metric">{stats.total} REPORT(S)</span> have been logged within the active 72-hour matrix. Telemetry analysis indicates that the most critical sector activity is currently concentrated in <span className="summary-terminal__metric">{stats.topCountry.toUpperCase()}</span>. The latest intelligence dispatch reports: <span className="summary-terminal__headline">"{stats.latestHeadline}"</span>
             </p>
         </div>
     );

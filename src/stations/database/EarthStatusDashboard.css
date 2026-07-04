@@ -86,12 +86,22 @@
   overflow-y: auto;
 }
 
+.earth-status__panel a {
+    display: block;                
+    text-decoration: none;           
+    color: rgba(255, 220, 240, 0.95); 
+}
+
 .earth-status__summary {
   min-height: 110px;
   padding: 16px;
 }
 
-/* For ConflictList rows */
+.earth-status__panel a:hover {
+    background: rgba(255, 140, 200, 0.08); 
+    cursor: pointer;
+}
+
 .conflict-list {
   list-style: none;
   margin: 0;
@@ -129,6 +139,27 @@
   margin: 0;
   opacity: 0.75;
   line-height: 1.4;
+}
+
+.conflict-list__row {
+    display: block;
+    padding: 6px 12px;
+    margin-bottom: 4px;
+    text-decoration: none;
+    background: rgba(20, 5, 15, 0.2);
+    border-radius: 2px;
+    transition: background 0.15s ease-in-out;
+}
+
+.conflict-list__row:hover {
+    background: rgba(255, 45, 149, 0.08);
+}
+
+.conflict-list__location {
+    font-family: monospace; 
+    font-size: 0.85rem;    
+    color: rgba(255, 220, 240, 0.85); 
+    line-height: 1.4;
 }
 
 /* For SummaryBar stats */
@@ -199,4 +230,22 @@
   color: rgba(255, 220, 240, 0.95);
   font-style: italic;
   font-weight: 500;
+}
+
+.summary-terminal__status-tag {
+  color: rgba(255, 140, 200, 0.95); 
+  font-weight: 900;
+  margin-right: 6px;
+  text-shadow: 0 0 8px rgba(255, 140, 200, 0.4);
+}
+
+.summary-terminal__cursor {
+  display: inline-block;
+  animation: terminal-blink 1.2s steps(2, start) infinite;
+  margin-right: 2px;
+}
+
+@keyframes terminal-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }

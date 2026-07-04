@@ -30,9 +30,14 @@ function latLongToVector3(lat, lon, radius) {
 function ConflictMarker({ position, color, size }) {
     return (
         <mesh position={position}>
-            <sphereGeometry args={[size, 12, 12]} />
-            <meshStandardMaterial color={color} toneMapped={false} />
-            <pointLight color={color} intensity={0.6} distance={0.4} />
+            <sphereGeometry args={[size, 16, 16]} />
+            <meshStandardMaterial 
+                color={color} 
+                emissive={color}
+                emissiveIntensity={3.5}
+                toneMapped={false} 
+            />
+            <pointLight color={color} intensity={1.6} distance={0.8} decay={2} />
         </mesh>
     );
 }
