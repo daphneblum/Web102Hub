@@ -11,7 +11,8 @@ export default function App() {
       <div className="overlay">
         {/* <FlashcardDeck /> */}
         {/* <ExoplanetStation /> */}
-        <EarthStatusDashboard />
+        {/* <EarthStatusDashboard /> */}
+        <StarseedWeatherStation />
       </div>
   </div>
   );
