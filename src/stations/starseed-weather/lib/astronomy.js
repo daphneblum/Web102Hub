@@ -145,7 +145,7 @@ export function getPlanetPositions(date = new Date()) {
     return bodies.map((body) => {
         const longitude = getLongitude(body, date);
         const { sign, degree } = longitudeToSign(longitude);
-        const isRetrograde = body === 'Sun' || body === 'Moon' ? false : isRetrograde(body, date);
+        const retrograde = body === 'Sun' || body === 'Moon' ? false : isRetrograde(body, date);
 
         return { body, longitude, sign, degree, retrograde };
     });
@@ -180,11 +180,31 @@ export function getAspects(positions) {
     return aspects.sort((a, b) => b.tightness - a.tightness);
 }
 
+export function getNotableFact({ aspects, retrogradeBodies }) {
+    const parts = [];
+
+    if (aspects.length > 0) {
+        const tightest = aspects[0];
+        parts.push(
+            `${tightest.bodyA} and ${tightest.bodyB} are in the tightest aspect right now - ` + `an almost exact ${tightest.aspect} (${tightest.orb}° orb).`
+        );
+    }
+
+    if (retrogradeBodies.length > 0) {
+        const list = retrogradeBodies.join(', ');
+        parts.push(`${retrogradeBodies.length} ${retrogradeBodies.length === 1 ? 'body is ' : 'bodies are'} currently retrograde: ${list}.`);
+    } else {
+        parts.push('No bodies are currently retrograde.');
+    }
+    return parts.join(' ');
+}
+
 export function getDailySnapshot(date = new Date()) {
     const positions = getPlanetPositions(date);
     const aspects = getAspects(position);
     const moon = getMoonPhase(date);
     const retrogradeBodies = positions.filter((p) => p.retrograde).map((p) => p.body);
+    const notableFact = getNotableFact({ aspects, retrogradeBodies });
 
     return {
         date: date.toISOString().slice(0, 10),
@@ -192,6 +212,7 @@ export function getDailySnapshot(date = new Date()) {
         aspects,
         moon,
         retrogradeBodies,
+        notableFact,
     };
 }
 
