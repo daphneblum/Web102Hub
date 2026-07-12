@@ -17,3 +17,5 @@ function StarseedWeatherStation() {
         </HashRouter>
     )
 }
+
+export default StarseedWeatherStation;
