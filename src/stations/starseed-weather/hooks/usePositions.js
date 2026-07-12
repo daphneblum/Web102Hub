@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function usePositions() {
+export function usePositions() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -38,4 +38,3 @@ function usePositions() {
 
 
 
-export default usePositions;

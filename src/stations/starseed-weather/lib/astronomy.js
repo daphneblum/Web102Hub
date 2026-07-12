@@ -215,6 +215,43 @@ export function getNotableFact({ aspects, retrogradeBodies }) {
     return parts.join(' ');
 }
 
+export function getRetrogradeTimeline(centerDate = new Date(), daysBefore = 30, daysAfter = 60) {
+    const bodies = [...ENGINE_BODIES, 'Chiron'].filter((b) => b !== 'Sun' && b !== 'Moon');
+    const oneDayMs = 24 * 60 * 60 * 1000;
+    const startDate = new Date(centerDate.getTime() - daysBefore * oneDayMs);
+    const totalDays = daysBefore + daysAfter;
+
+    const timeline = bodies.map((body) => {
+        const segments = [];
+        let currentSegment = null;
+
+        for (let i = 0; i <= totalDays; i++) {
+            const day = new Date(startDate.getTime() + i * oneDayMs);
+            const retro = isRetrograde(body, day);
+            
+            if (retro && !currentSegment) {
+                currentSegment = { start: formatDateLabel(day) };
+            } else if (!retro && currentSegment) {
+                currentSegment.end = formatDateLabel(new Date(day.getTime() - oneDayMs));
+                segments.push(currentSegment);
+                currentSegment = null;
+            }
+        }
+        if (currentSegment) {
+            const lastDay = new Date(startDate.getTime() + totalDays * oneDayMs);
+            currentSegment.end = formatDateLabel(lastDay);
+            segments.push(currentSegment);
+        }
+        return { body, segments };
+    });
+    return {
+        rangeStart: formatDateLabel(startDate),
+        rangeEnd: formatDateLabel(new Date(startDate.getTime() + totalDays * oneDayMs)),
+        today: formatDateLabel(centerDate),
+        timeline,
+    };
+}
+
 export function getDailySnapshot(date = new Date()) {
     const positions = getPlanetPositions(date);
     const aspects = getAspects(positions);

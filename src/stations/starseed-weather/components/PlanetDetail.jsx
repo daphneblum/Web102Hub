@@ -66,7 +66,7 @@ function PlanetDetail() {
                     const other = a.bodyA.toLowerCase() === id ? a.bodyB : a.bodyA;
                     return (
                         <p key={`${a.bodyA}-${a.bodyB}`} className="starseed-card__value" style={{ fontSize: 12 }}>
-                            {a.aspect} with {other} ({a.orb}° or b)
+                            {a.aspect} with {other} ({a.orb}° orb)
                         </p>
                     );
                 })}
