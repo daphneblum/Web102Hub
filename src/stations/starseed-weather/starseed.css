@@ -1,0 +1,154 @@
+
+:root {
+  --starseed-void-ink: #0d0720;
+  --starseed-nebula-violet: #9b5de5;
+  --starseed-lavender: #c9aeff;
+  --starseed-signal-pink: #ff7fc0;
+  --starseed-chrome-white: #e8e2ff;
+  --starseed-scan-line: rgba(210, 190, 255, 0.08);
+}
+
+.starseed-station {
+  width: min(92vw, 1000px);
+  height: min(88vh, 760px);
+  padding: 0;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+
+  color: var(--starseed-chrome-white);
+  font-family: "Orbitron", "Segoe UI", sans-serif;
+
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      var(--starseed-scan-line) 2px,
+      var(--starseed-scan-line) 4px
+    ),
+    linear-gradient(
+      160deg,
+      var(--starseed-void-ink) 0%,
+      #150a2e 55%,
+      var(--starseed-void-ink) 100%
+    );
+  border: 1px solid rgba(155, 93, 229, 0.5);
+  border-radius: 24px;
+  box-shadow:
+    0 0 12px rgba(201, 174, 255, 0.6),
+    0 0 28px rgba(155, 93, 229, 0.5),
+    0 0 65px rgba(155, 93, 229, 0.25),
+    inset 0 0 40px rgba(201, 174, 255, 0.06);
+  overflow: hidden;
+}
+
+/* ---- Sidebar nav (shared across all routes) ---- */
+
+.starseed-nav {
+  width: 160px;
+  flex-shrink: 0;
+  padding: 24px 16px;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  border-right: 1px solid rgba(155, 93, 229, 0.25);
+  background: rgba(13, 7, 32, 0.4);
+}
+
+.starseed-nav__title {
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 3px;
+
+  background: linear-gradient(135deg, var(--starseed-lavender), var(--starseed-signal-pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 12px rgba(155, 93, 229, 0.5));
+
+  margin: 0 0 20px 0;
+}
+
+.starseed-nav__link {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 8px;
+
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(232, 226, 255, 0.7);
+
+  transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+.starseed-nav__link:hover {
+  background: rgba(155, 93, 229, 0.12);
+  color: var(--starseed-chrome-white);
+}
+
+.starseed-nav__link--active {
+  background: rgba(155, 93, 229, 0.18);
+  color: var(--starseed-lavender);
+  text-shadow: 0 0 8px rgba(201, 174, 255, 0.6);
+}
+
+/* ---- Main content area ---- */
+
+.starseed-main {
+  flex: 1;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.starseed-content {
+  flex: 1;
+  min-height: 0;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+/* ---- Shared card component ---- */
+
+.starseed-card {
+  border-radius: 16px;
+  border: 1px solid rgba(155, 93, 229, 0.3);
+  background: rgba(13, 7, 32, 0.5);
+  box-shadow: inset 0 0 25px rgba(201, 174, 255, 0.06);
+  padding: 16px;
+}
+
+.starseed-card__label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(201, 174, 255, 0.7);
+  margin: 0 0 8px 0;
+}
+
+.starseed-card__value {
+  font-size: 15px;
+  color: var(--starseed-chrome-white);
+  text-shadow: 0 0 10px rgba(201, 174, 255, 0.4);
+}
+
+/* ---- Loading / error states ---- */
+
+.starseed-status-text {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: rgba(201, 174, 255, 0.6);
+  padding: 24px;
+}
+
+.starseed-status-text--error {
+  color: var(--starseed-signal-pink);
+}
