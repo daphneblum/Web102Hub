@@ -1,6 +1,5 @@
 import * as Astronomy from 'astronomy-engine';
-import { radToDeg } from 'three/src/math/MathUtils.js';
-import { degToRad } from 'three/src/math/MathUtils.js';
+
 
 
 
@@ -91,6 +90,23 @@ function chironLongitude(date) {
 
     const longitude = radToDeg(Math.atan2(y, x));
     return normalizeDegrees(longitude);
+}
+
+const DISPLAY_TIMEZONE = 'America/Chicago';
+
+function formatDateLabel(date, timeZone = DISPLAY_TIMEZONE) {
+    const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    }).formatToParts(date);
+
+    const map = {};
+    parts.forEach((p) => { map[p.type] = p.value;
+
+    });
+    return `${map.year}-${map.month}-${map.day}`;
 }
 
 function degToRad(d) {
@@ -201,13 +217,13 @@ export function getNotableFact({ aspects, retrogradeBodies }) {
 
 export function getDailySnapshot(date = new Date()) {
     const positions = getPlanetPositions(date);
-    const aspects = getAspects(position);
+    const aspects = getAspects(positions);
     const moon = getMoonPhase(date);
     const retrogradeBodies = positions.filter((p) => p.retrograde).map((p) => p.body);
     const notableFact = getNotableFact({ aspects, retrogradeBodies });
 
     return {
-        date: date.toISOString().slice(0, 10),
+        date: formatDateLabel(date),
         positions,
         aspects,
         moon,
