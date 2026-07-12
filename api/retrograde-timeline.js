@@ -1,4 +1,4 @@
-import { getRetrogradeTimeline } from "../lib/astronomy";
+import { getRetrogradeTimeline } from '../src/stations/starseed-weather/lib/astronomy.js';
 
 export default async function handler(req, res) {
     if (req.method !== 'GET') {
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
 
         const timeline = getRetrogradeTimeline(new Date(), daysBefore, daysAfter);
 
-        res.setHeader('Cache-Control', 's-maxage-21600, stale-while-revalidate=86400');
+        res.setHeader('Cache-Control', 's-maxage=21600, stale-while-revalidate=86400');
 
         return res.status(200).json(timeline);
     } catch (error) {

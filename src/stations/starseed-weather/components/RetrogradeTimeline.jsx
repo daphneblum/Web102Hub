@@ -18,7 +18,7 @@ export default function RetrogradeTimeline() {
     const { data, loading, error } = useRetrogradeTimeline();
 
     if (loading) {
-        return <p className="starseed-status-tex">Charting retrograde windows...</p>
+        return <p className="starseed-status-text">Charting retrograde windows...</p>
     }
 
     if (error) {
@@ -85,8 +85,9 @@ export default function RetrogradeTimeline() {
                                     <rect
                                         key={`${row.body}-${seg.start}`}
                                         x={x} y={y + 4}
+                                        width={width} height={ROW_HEIGHT - 8}
                                         rx={4}
-                                        fill={isActiveNow ? 'var(--starseed-signal-pink)' : 'var(--starseed-nebula-violet'}
+                                        fill={isActiveNow ? 'var(--starseed-signal-pink)' : 'var(--starseed-nebula-violet)'}
                                         opacity={isActiveNow ? 0.9 : 0.6}
                                     />
                                 );

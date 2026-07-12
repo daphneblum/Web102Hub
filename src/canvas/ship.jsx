@@ -37,6 +37,7 @@ function ShipCanvas() {
         <Canvas 
             camera={{ position: [34.13, 7.75, 3.61], fov: 60, near: 0.01, far: 10000 }}
             style={{ width: "100vw", height: "100vh" }}
+            frameloop='demand'
             >
             <CameraSetup />
             <ambientLight intensity={0.4} />

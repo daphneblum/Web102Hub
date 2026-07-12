@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { usePositions } from '../hooks/usePositions.js'
+import RetrogradeTimeline from './RetrogradeTimeline.jsx';
 
 function DashboardView() {
     const { data, loading, error } = usePositions();
@@ -45,6 +46,9 @@ function DashboardView() {
                         <span style={{ fontSize: 10, opacity: 0.5 }}></span>
                     </Link>
                 ))}
+            </div>
+            <div style= {{ marginTop: 16 }}>
+                <RetrogradeTimeline />
             </div>
             {/* TODO: three summary stats, Retrograde Timeline and Aspect Radar */}
             <p className='starseed-status-text' style={{ padding: '16px 0 0' }}>
