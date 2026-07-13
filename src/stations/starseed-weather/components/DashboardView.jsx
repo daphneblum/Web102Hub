@@ -4,6 +4,7 @@ import { usePositions } from '../hooks/usePositions.js';
 import RetrogradeTimeline from './RetrogradeTimeline.jsx';
 import AspectRadar from './AspectRadar.jsx';
 import SummaryStats from './SummaryStats.jsx';
+import StationMasthead from './StationMasthead.jsx';
 
 const ZODIAC_ELEMENT = {
   Aries: 'fire',
@@ -35,15 +36,15 @@ const BODY_GLYPHS = {
 };
 
 function DashboardView() {
-  const { data, loading, error } = usePositions();
+    const { data, loading, error } = usePositions();
 
-  const [search, setSearch] = useState('');
-  const [element, setElement] = useState('all');
-  const [retrogradeOnly, setRetrogradeOnly] = useState(false);
-  const [minDegree, setMinDegree] = useState(0);
+    const [search, setSearch] = useState('');
+    const [element, setElement] = useState('all');
+    const [retrogradeOnly, setRetrogradeOnly] = useState(false);
+    const [minDegree, setMinDegree] = useState(0);
 
-  const filteredPositions = useMemo(() => {
-    if (!data) return [];
+    const filteredPositions = useMemo(() => {
+        if (!data) return []; 
 
     const query = search.trim().toLowerCase();
 
@@ -72,6 +73,8 @@ function DashboardView() {
     });
   }, [data, search, element, retrogradeOnly, minDegree]);
 
+  const retrogradeCount = data ? data.positions.filter((position) => position.retrograde).length : 0;  
+
   if (loading) {
     return (
       <p className="starseed-status-text">
@@ -90,135 +93,161 @@ function DashboardView() {
 
   return (
     <div>
-      <h2
-        className="starseed-card__label"
-        style={{ fontSize: 12, marginBottom: 16 }}
-      >
-        Today&apos;s Position - {data.date}
-      </h2>
+        <StationMasthead
+        eyebrow={`Today's position / ${data.date}`}
+        title="Starseed Weather"
+        subtitle="Current planetary positions, retrograde conditions, and active celestial aspects."
+        stats={[
+            {
+            label: 'Bodies',
+            value: data.positions.length,
+            },
+            {
+            label: 'Retrograde',
+            value: retrogradeCount,
+            },
+            {
+            label: 'Visible',
+            value: filteredPositions.length,
+            },
+        ]}
+        />
 
-      <section className="starseed-section-box">
+        <section className="starseed-toolbar">
+        <p className="starseed-toolbar__label">
+            Filter planetary directory
+        </p>
+
         <div className="starseed-filter-row">
-          <input
+            <input
             type="text"
             className="starseed-input"
             placeholder="Search by name or sign..."
             aria-label="Search planets by name or zodiac sign"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-          />
+            />
 
-          <select
+            <select
             className="starseed-input"
             aria-label="Filter by zodiac element"
             value={element}
             onChange={(event) => setElement(event.target.value)}
-          >
+            >
             <option value="all">All elements</option>
             <option value="fire">Fire</option>
             <option value="earth">Earth</option>
             <option value="air">Air</option>
             <option value="water">Water</option>
-          </select>
+            </select>
 
-          <label className="starseed-filter-label">
+            <label className="starseed-filter-label">
             <input
-              type="checkbox"
-              checked={retrogradeOnly}
-              onChange={(event) =>
+                type="checkbox"
+                checked={retrogradeOnly}
+                onChange={(event) =>
                 setRetrogradeOnly(event.target.checked)
-              }
+                }
             />
             Retrograde only
-          </label>
+            </label>
 
-          <label className="starseed-filter-label">
+            <label className="starseed-filter-label">
             Min degree: {minDegree}°
             <input
-              type="range"
-              min="0"
-              max="29"
-              value={minDegree}
-              aria-label="Minimum degree within sign"
-              onChange={(event) =>
+                type="range"
+                min="0"
+                max="29"
+                value={minDegree}
+                aria-label="Minimum degree within sign"
+                onChange={(event) =>
                 setMinDegree(Number(event.target.value))
-              }
+                }
             />
-          </label>
+            </label>
         </div>
-      </section>
+        </section>
 
-      <section className="starseed-section-box">
-        <div className="starseed-planet-list">
-          {filteredPositions.length === 0 && (
-            <p className="starseed-status-text">
-              No bodies match these filters.
-            </p>
-          )}
+        <div className="starseed-two-col">
+        <section className="starseed-section-box">
+            <div className="starseed-planet-list">
+            {filteredPositions.length === 0 && (
+                <p className="starseed-status-text">
+                No bodies match these filters.
+                </p>
+            )}
 
-          {filteredPositions.map((planet) => (
-            <Link
-              key={planet.body}
-              to={`/planet/${planet.body.toLowerCase()}`}
-              className="starseed-card starseed-planet-row"
-            >
-              <span
-                className="starseed-planet-row__glyph"
-                aria-hidden="true"
-              >
-                {BODY_GLYPHS[planet.body] ?? '◌'}
-              </span>
+            {filteredPositions.map((planet, index) => (
+                <Link
+                key={planet.body}
+                to={`/planet/${planet.body.toLowerCase()}`}
+                className="starseed-card starseed-planet-row"
+                >
+                <span className="starseed-planet-row__index">
+                    {String(index + 1).padStart(2, '0')}
+                </span>
 
-              <span className="starseed-card__value starseed-planet-row__body">
-                {planet.body}
-              </span>
+                <span
+                    className="starseed-planet-row__glyph"
+                    aria-hidden="true"
+                >
+                    {BODY_GLYPHS[planet.body] ?? '◌'}
+                </span>
 
-              <span className="starseed-card__value starseed-planet-row__position">
-                {planet.degree}° {planet.sign}
-              </span>
+                <span className="starseed-card__value starseed-planet-row__body">
+                    {planet.body}
+                </span>
 
-              <span
-                className={[
-                  'starseed-card__label',
-                  'starseed-planet-row__status',
-                  planet.retrograde
-                    ? 'starseed-planet-row__status--retrograde'
-                    : 'starseed-planet-row__status--direct',
-                ].join(' ')}
-              >
-                {planet.retrograde ? 'Retrograde' : 'Direct'}
-              </span>
+                <span className="starseed-card__value starseed-planet-row__position">
+                    {planet.degree}° {planet.sign}
+                </span>
 
-              <span
-                className="starseed-planet-row__arrow"
-                aria-hidden="true"
-              >
-                →
-              </span>
-            </Link>
-          ))}
+                <span
+                    className={[
+                    'starseed-card__label',
+                    'starseed-planet-row__status',
+                    planet.retrograde
+                        ? 'starseed-planet-row__status--retrograde'
+                        : 'starseed-planet-row__status--direct',
+                    ].join(' ')}
+                >
+                    {planet.retrograde ? 'Retrograde' : 'Direct'}
+                </span>
+
+                <span
+                    className="starseed-planet-row__arrow"
+                    aria-hidden="true"
+                >
+                    →
+                </span>
+                </Link>
+            ))}
+            </div>
+            <section className="starseed-section-box">
+            <SummaryStats data={data} />
+            </section>
+        </section>
+
+        <div className="starseed-two-col__side">
+            <section className="starseed-section-box">
+                <RetrogradeTimeline />
+            </section>
+
+            <section className="starseed-section-box">
+                <AspectRadar />
+            </section>
+
+            
+
+            <section className="starseed-section-box">
+                <p className="starseed-status-text starseed-notable-fact">
+                    {data.notableFact}
+                </p>
+            </section>
         </div>
-      </section>
-
-      <section className="starseed-section-box">
-        <RetrogradeTimeline />
-      </section>
-
-      <section className="starseed-section-box">
-        <AspectRadar />
-      </section>
-
-      <section className="starseed-section-box">
-        <SummaryStats data={data} />
-      </section>
-
-      <section className="starseed-section-box">
-        <p className="starseed-status-text starseed-notable-fact">
-          {data.notableFact}
-        </p>
-      </section>
+        </div>
     </div>
-  );
+    );
 }
 
 export default DashboardView;

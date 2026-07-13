@@ -1,18 +1,14 @@
-/**
- * broadcastWorld.js
- * ---------------------------------------------------------------
- * The fictional setting for Starseed Weather Service broadcasts —
- * place names, civic authorities, and segment-type rotation.
- *
- * Deliberately kept SEPARATE from phenomenaMap.js: that file only
- * contains content directly derived from real astrological data
- * (a retrograde, an aspect, a moon phase). This file is pure
- * world-building — it doesn't correspond to anything astronomical,
- * it just gives the generator a consistent fictional place to set
- * each day's broadcast, and a way to vary WHICH KIND of segment is
- * being delivered even when the underlying astrology repeats.
- * ---------------------------------------------------------------
- */
+//  The fictional setting for Starseed Weather Service broadcasts —
+//  place names, civic authorities, and segment-type rotation.
+//  
+//   Deliberately kept SEPARATE from phenomenaMap.js: that file only
+//   contains content directly derived from real astrological data
+//   (a retrograde, an aspect, a moon phase). This file is pure
+//   world-building — it doesn't correspond to anything astronomical,
+//   it just gives the generator a consistent fictional place to set
+//   each day's broadcast, and a way to vary WHICH KIND of segment is
+//   being delivered even when the underlying astrology repeats.
+
 
 export const LOCATIONS = {
   districts: [

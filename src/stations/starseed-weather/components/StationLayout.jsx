@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import BroadcastTicker from "./BroadcastTicker.jsx";
 import '../starseed.css'
 
 function StationLayout({ children }) {
@@ -32,7 +33,7 @@ function StationLayout({ children }) {
                 <div className="starseed-content">
                     {children}
                 </div>
-                {/* TODO: <BroadcastTicker /> */}
+                <BroadcastTicker />
             </div>
         </div>
     )
