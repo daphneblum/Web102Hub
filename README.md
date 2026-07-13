@@ -2,7 +2,7 @@
 
 Submitted by: **Daphne Blum**
 
-This web app: **This web app displays real-time astronomical and astrological data in a retrofuturistic dashboard inspired by late 90s and early 2000s sci-fi interfaces. Users can browse current planetary positions, filter planets by zodiac element and retrograde status, view detailed information for each celestial body, and explore visualizations including a retrograde timeline and planetary aspect radar. This data is then used to generate a dreamy, sci-fi-style daily horoscope inspired by Summer Wiley's Starseed Weather Service skits on TikTok.**
+This web app: **This web app displays real-time astronomical and astrological data in a retrofuturistic dashboard inspired by late 90s and early 2000s sci-fi interfaces. Users can browse current planetary positions, filter planets by zodiac element and retrograde status, view detailed information for each celestial body, and explore visualizations including a retrograde timeline and planetary aspect radar. This data is then used with Google Gemini to generate a dreamy, sci-fi-style daily horoscope inspired by Summer Wiley's Starseed Weather Service skits on TikTok.**
 
 Time spent: **30** hours spent in total
 
@@ -47,21 +47,21 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented features:
 
-<img src='/public/assets/dashboard.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='/public/assets/weather.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 
 GIF created with Kap
 
 ## Notes
 
--The biggest challenge in this project was balancing functionality with visual design. I wanted the dashboard to feel like an interface from a retrofuturistic spacecraft rather than a traditional analytics dashboard while still presenting real astronomical data in a usable way. Designing reusable React components, organizing the layout, and refining the visual styling required multiple iterations as the project grew beyond the original assignment scope.
+- The biggest challenge in this project was balancing functionality with visual design. I wanted the dashboard to feel like an interface from a retrofuturistic spacecraft rather than a traditional analytics dashboard while still presenting real astronomical data in a usable way. Designing reusable React components, organizing the layout, and refining the visual styling required multiple iterations as the project grew beyond the original assignment scope.
 
--This project is still a work in progress. There are plans to add further visualizations to the detail pages as well as improve readability.
+- This project is still a work in progress. There are plans to add further visualizations to the detail pages as well as improve readability.
 
--This project was a completely new dashboard, different from Project 5. Because of this, I ensured it met all the rubric requirements for project 5 as well as project 6. 
+- This project was a completely new dashboard, different from Project 5. Because of this, I ensured it met all the rubric requirements for project 5 as well as project 6. 
 
--Forecast was inspired by Summer Wiley on TikTok:
-<video src="(https://www.tiktok.com/t/ZP8GGqyFC/)" width="320" height="240" controls></video>
+- Forecast was inspired by Summer Wiley on TikTok:
+https://www.tiktok.com/t/ZP8GGqyFC/
 
 ## License
 
