@@ -48,7 +48,7 @@ function PlanetDetail() {
             </Link>
 
             <h2 className="starseed-card__label" style={{ fontSize: 12, marginBottom: 16 }}>
-                {planet.body} - {planet.sign} {planet.degree}° {planet.retrograde ? '(Retrograde)' : ''}
+                {planet.body} in {planet.sign} {planet.degree}° {planet.retrograde ? '(Retrograde)' : ''}
             </h2>
 
             {/* TODO: orbit model animation */}
