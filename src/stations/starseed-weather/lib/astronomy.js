@@ -94,7 +94,7 @@ function chironLongitude(date) {
 
 const DISPLAY_TIMEZONE = 'America/Chicago';
 
-function formatDateLabel(date, timeZone = DISPLAY_TIMEZONE) {
+export function formatDateLabel(date, timeZone = DISPLAY_TIMEZONE) {
     const parts = new Intl.DateTimeFormat('en-CA', {
         timeZone,
         year: 'numeric',

@@ -1,12 +1,15 @@
 import { Redis } from '@upstash/redis';
 import { getDailySnapshot, formatDateLabel } from '../src/stations/starseed-weather/lib/astronomy.js';
-import { describePhenomena } from '../src/stations/starseed-weather/lib/phenomenaMap';
+import { describePhenomena } from '../src/stations/starseed-weather/lib/phenomenaMap.js';
 import { pickLocation, pickAuthority, pickSegmentType } from '../src/stations/starseed-weather/lib/broadcastWorld.js';
 
 const redis = new Redis({
-    url: ProcessingInstruction.env.UPSTASH_REDIS_REST_URL,
+    url: process.env.UPSTASH_REDIS_REST_URL,
     token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
+
+const GEMINI_MODEL = 'gemini-3.5-flash';
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 const STYLE_EXEMPLARS = [
   'Long distance signal delays continue across multiple districts. Residents may discover that certain feelings are mutual though not necessarily simultaneous. Authorities believe recent timing disturbances may be linked to unauthorized activity near the central clock tower. Repairs are currently underway. This is your Starseed Weather Service, signing off!',
@@ -35,7 +38,7 @@ function formatIngredientBlock(entries, kind) {
 
     return entries
         .map((entry) => {
-            const name = name === 'moon phase'
+            const name = kind === 'moon phase'
                 ? entry.phase
                 : (entry.body ?? `${entry.bodyA} / ${entry.bodyB} (${entry.aspect})`);
 
@@ -52,8 +55,24 @@ function formatIngredientBlock(entries, kind) {
         .join('\n\n');
 }
 
+
+function extractJsonObject(text) {
+    const start = text.indexOf('{');
+    if (start === -1) throw new Error('No JSON object found in response.');
+
+    let depth = 0;
+    for (let i = start; i < text.length; i++) {
+        if (text[i] === '{') depth++;
+        if (text[i] === '}') depth--;
+        if (depth === 0) {
+            return text.slice(start, i + 1);
+        }
+    }
+    throw new Error('Unbalanced JSON object in response.');
+}
+
 function buildPrompt({ phenomena, setting, history }) {
-    const retrogradeBlock = formatIngredientBlock(phenomena.retrogradeBlock, 'retrograde');
+    const retrogradeBlock = formatIngredientBlock(phenomena.retrogrades, 'retrograde');
     const aspectBlock = formatIngredientBlock(phenomena.aspects, 'aspect');
     const  moonBlock = phenomena.moon ? formatIngredientBlock([phenomena.moon], 'moon phase') : 'No moon data.';
 
@@ -141,7 +160,11 @@ async function callGemini(prompt) {
     try {
         parsed = JSON.parse(text);
     } catch (err) {
-        throw new Error(`Failed to parse Gemini response as JSON: ${text}`);
+        try {
+            parsed = JSON.parse(extractJsonObject(text));
+        } catch (err2) {
+            throw new Error(`Failed to parse Gemini response as JSON: ${text}`);
+        }
     }
 
     if (!parsed.ticker_line || !parsed.full_segment) {
@@ -151,31 +174,35 @@ async function callGemini(prompt) {
     return parsed;
 }
 
+export async function generateAndCacheForecast() {
+    const today = new Date();
+    const dateLabel = formatDateLabel(today);
+    const snapshot = getDailySnapshot(today);
+    const phenomena = describePhenomena(snapshot);
+    const setting = {
+        location: pickLocation(),
+        authority: pickAuthority(),
+        segmentType: pickSegmentType(),
+    };
+    const history = await getRecentHistory(today);
+    const prompt = buildPrompt({ phenomena, setting, history });
+    const forecast = await callGemini(prompt);
+    const record = {
+        date: dateLabel,
+        ...forecast,
+        setting,
+        generatedAt: new Date().toISOString(),
+    };
+
+    await redis.set(`forecast: ${dateLabel}`, record);
+
+    return record;
+}
+
 export default async function handler(req, res) {
     try {
-        const today = new Date();
-        const dateLabel = formatDateLabel(today);
-
-        const snapshot = getDailySnapshot(today);
-        const phenomena = describePhenomena(snapshot);
-        const setting = {
-            location: pickLocation(),
-            authority: pickAuthority(),
-            segmentType: pickSegmentType(),
-        };
-        const history = await getRecentHistory(today);
-        const prompt = buildPrompt({ phenomena, setting, history });
-        const forecast = await callGemini(prompt);
-        const record = {
-            date: dateLabel,
-            ...forecast,
-            setting,
-            generatedAt: new Date().toISOString(),
-        };
-
-        await redis.set(`forecast:${dateLabel}`, record);
-
-        return res.status(200).json({ success: true, record });
+       const record = await generateAndCacheForecast();
+       return res.status(200).json({ success: true, record });
     } catch (error) {
         console.error('Error generating forecast:', error);
         return res.status(500).json({ error: error.message });

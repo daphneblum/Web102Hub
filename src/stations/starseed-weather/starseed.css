@@ -1,4 +1,3 @@
-
 :root {
   --starseed-void-ink: #0d0720;
   --starseed-nebula-violet: #9b5de5;
@@ -43,8 +42,6 @@
     inset 0 0 40px rgba(201, 174, 255, 0.06);
   overflow: hidden;
 }
-
-/* ---- Sidebar nav (shared across all routes) ---- */
 
 .starseed-nav {
   width: 160px;
@@ -99,8 +96,6 @@
   text-shadow: 0 0 8px rgba(201, 174, 255, 0.6);
 }
 
-/* ---- Main content area ---- */
-
 .starseed-main {
   flex: 1;
   min-width: 0;
@@ -115,8 +110,6 @@
   padding: 24px;
   overflow-y: auto;
 }
-
-/* ---- Shared card component ---- */
 
 .starseed-card {
   border-radius: 16px;
@@ -140,8 +133,6 @@
   text-shadow: 0 0 10px rgba(201, 174, 255, 0.4);
 }
 
-/* ---- Loading / error states ---- */
-
 .starseed-status-text {
   font-size: 11px;
   letter-spacing: 1px;
@@ -152,8 +143,6 @@
 .starseed-status-text--error {
   color: var(--starseed-signal-pink);
 }
-
-/* ---- Search + filter controls ---- */
 
 .starseed-input {
   font-family: inherit;
@@ -182,4 +171,189 @@
   font-size: 10px;
   letter-spacing: 0.5px;
   color: rgba(232, 226, 255, 0.75);
+}
+
+.starseed-planet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.starseed-planet-row {
+  display: grid;
+  grid-template-columns:
+    34px
+    minmax(100px, 1fr)
+    minmax(150px, 1.25fr)
+    100px
+    18px;
+
+  align-items: center;
+  gap: 10px;
+
+  min-height: 48px;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+.starseed-planet-row__glyph {
+  font-size: 20px;
+  line-height: 1;
+  text-align: center;
+
+  color: var(--starseed-signal-pink);
+
+  text-shadow:
+    0 0 8px rgba(255, 127, 192, 0.45);
+}
+
+.starseed-planet-row__body {
+  text-transform: uppercase;
+}
+
+.starseed-planet-row__position {
+  color: var(--starseed-lavender);
+}
+
+.starseed-planet-row__status {
+  margin: 0;
+  justify-self: start;
+}
+
+.starseed-planet-row__status--direct {
+  color: rgba(201, 174, 255, 0.55);
+}
+
+.starseed-planet-row__status--retrograde {
+  color: var(--starseed-signal-pink);
+
+  text-shadow:
+    0 0 8px rgba(255, 127, 192, 0.5);
+}
+
+.starseed-planet-row__arrow {
+  font-size: 11px;
+  color: rgba(201, 174, 255, 0.35);
+}
+
+.starseed-planet-row:hover {
+  border-color: rgba(255, 127, 192, 0.48);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 127, 192, 0.08),
+      transparent 35%
+    ),
+    rgba(13, 7, 32, 0.58);
+}
+
+.starseed-planet-row:hover .starseed-planet-row__arrow {
+  color: var(--starseed-signal-pink);
+}
+
+.starseed-planet-row:focus-visible {
+  outline: 1px dotted var(--starseed-signal-pink);
+  outline-offset: 3px;
+}
+
+@media (max-width: 700px) {
+  .starseed-planet-row {
+    grid-template-columns:
+      28px
+      minmax(80px, 1fr)
+      minmax(110px, 1fr)
+      18px;
+  }
+
+  .starseed-planet-row__status {
+    grid-column: 2 / 4;
+  }
+
+  .starseed-planet-row__arrow {
+    grid-column: 4;
+    grid-row: 1 / 3;
+  }
+}
+
+.starseed-section-box {
+  margin-top: 16px;
+  padding: 12px;
+
+  border: 1px solid rgba(155, 93, 229, 0.3);
+  border-radius: 16px;
+
+  background: rgba(13, 7, 32, 0.3);
+  box-shadow: inset 0 0 25px rgba(201, 174, 255, 0.035);
+}
+
+.starseed-section-box:first-of-type {
+  margin-top: 0;
+}
+
+.starseed-section-box .starseed-filter-row {
+  margin-bottom: 0;
+}
+
+.starseed-section-box .starseed-planet-list {
+  margin: 0;
+}
+
+.starseed-notable-fact {
+  margin: 0;
+  padding: 4px;
+}
+
+/* ---- Broadcast ticker (persistent, all routes) ---- */
+
+.starseed-ticker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  height: 32px;
+  padding: 0 14px;
+  flex-shrink: 0;
+
+  border-top: 1px solid rgba(155, 93, 229, 0.3);
+  background: rgba(13, 7, 32, 0.7);
+
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+}
+
+.starseed-ticker__label {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--starseed-signal-pink);
+  text-shadow: 0 0 8px rgba(255, 127, 192, 0.5);
+}
+
+.starseed-ticker__track {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.starseed-ticker__text {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: rgba(232, 226, 255, 0.85);
+  padding-left: 100%;
+  animation: starseed-ticker-scroll 22s linear infinite;
+}
+
+.starseed-ticker:hover .starseed-ticker__text {
+  animation-play-state: paused;
+}
+
+@keyframes starseed-ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
 }
