@@ -8,7 +8,7 @@ const redis = new Redis({
     token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
 
-const GEMINI_MODEL = 'gemini-3.5-flash';
+const GEMINI_MODEL = 'gemini-2.5-flash';
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 const STYLE_EXEMPLARS = [
@@ -194,7 +194,7 @@ export async function generateAndCacheForecast() {
         generatedAt: new Date().toISOString(),
     };
 
-    await redis.set(`forecast: ${dateLabel}`, record);
+    await redis.set(`forecast:${dateLabel}`, record);
 
     return record;
 }
