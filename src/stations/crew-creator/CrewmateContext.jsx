@@ -2,28 +2,82 @@ import { createContext, useContext, useState } from "react";
 
 const CrewmateContext = createContext(null);
 
+function buildTasks(existingTasks, selectedTexts) {
+    return selectedTexts.map((text) => {
+        const existing = existingTasks.find((t) => t.text === text);
+        return existing || { id: crypto.randomUUID(), text, done: false };
+    });
+}
+
 export function CrewmateProvider({ children }) {
     const [crewmates, setCrewmates] = useState([]);
 
-    const [neededRoles, setNeededRoles] = useState([]);
+    const [categories, setCateogries] = useState([]);
+    const [tasksByCategory, setTasksByCategory] = useState({});
+
+    function addCategory(name) {
+        const trimmed = name.trim();
+        if (!trimmed) return;
+        setCategories((prev) => 
+            prev.some((c) => c.toLowerCase() === trimmed.toLowerCase()) ? prev : [...prev, trimmed]);
+        setTasksByCategory((prev) => (prev[trimmed] ? prev : { ...prev, [trimmed]: [] }));
+    }   
+
+    function addTaskToCategory(category, taskText) {
+        const trimmed = taskText.trim();
+        if (!trimmed) return;
+        setTasksByCategory((prev) => {
+            const existing = prev[category] || [];
+            if (existing.some((t) => t.toLowerCase() === trimmed.toLowerCase())) {
+                return prev;
+            }
+            return { ...prev, [category]: [...existing, trimmed] };
+        });
+    }
+
+    function removeTaskFromCategory(category, taskText) {
+        setTasksByCategory((prev) => ({
+            ...prev,
+            [category]: (prev[category] || []).filter((t) => t !== taskText),
+        }));
+    }
 
     function addCrewmate({ name, role }) {
         const newCrewmate = {
             id: crypto.randomUUID(),
             name,
             role,
-            createdAt: Date.now,
+            createdAt: Date.now(),
         };
         setCrewmates((prev) => [...prev, newCrewmate]);
         return newCrewmate.id;
     }
 
-    function updateCrewmate(id, updates) {
+    function updateCrewmate(id, { name, category, taskTexts }) {
         setCrewmates((prev) =>
-            prev.map((c) => (c.id === id ? { ...c, ...updates } : c))
+            prev.map((c) => {
+                if (c.id !== id) return c;
+                return {
+                    ...c,
+                    name,
+                    category,
+                    tasks: buildTasks(c.tasks, tastTexts),
+                };
+            })
         );
     }
 
+    function toggleTask(crewmateId, taskId) {
+        setCrewmates((prev) => 
+            prev.map((c) =>
+                c.id === crewmateId ? {
+                    ...c,
+                    tasks: c.tasks.map((t) =>
+                    t.id === taskId ? { ...t, done: !t.done } : t ),
+                } : c 
+            )
+        );
+    }
     function deleteCrewmate(id) {
         setCrewmates((prev) => prev.filter((c) => c.id!==id));
     }
@@ -32,27 +86,18 @@ export function CrewmateProvider({ children }) {
         return crewmates.find((c) => c.id === id);
     }
 
-    function addNeededRoles(role) {
-        const trimmed = role.trim();
-        if (!trimeed) return;
-        setNeededRoles((prev) =>
-            prev.some((r) => r.toLowerCase() === trimmed.toLowerCase()) ? prev : [...prev, trimmed]
-        );
-    }
-
-    function removeNeededRoles(role) {
-        setNeededRoles((prev) => prev.filter((r) => r !== role));
-    }
-
     const value = {
         crewmates,
         addCrewmate,
         updateCrewmate,
         deleteCrewmate,
         getCrewmate,
-        neededRoles,
-        addNeededRoles,
-        removeNeededRoles,
+        toggleTask,
+        categories,
+        tasksByCategory,
+        addCategory,
+        addTaskToCategory,
+        removeTaskFromCategory,
     };
 
     return (
@@ -61,6 +106,7 @@ export function CrewmateProvider({ children }) {
         </CrewmateContext.Provider>
     );
 }
+
 
 export function useCrewmates() {
     const ctx = useContext(CrewmateContext);
