@@ -1,0 +1,144 @@
+.crew-creator-station {
+    --text-color: rgba(200, 220, 255, 0.95);
+    --glow-color: rgba(120, 200, 255, 0.6);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 32px;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 24px;
+}
+
+.station-title {
+    font-family: "Orbitron", sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #ffc857, #ff6b9d, #c77dff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.4));
+    margin: 0;
+}
+
+.station-subtitle {
+    margin: 0;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.role-planner {
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.role-form {
+    display: flex;
+    gap: 8px;
+}
+
+.role-form input {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(120, 200, 255, 0.2);
+    background: rgba(0, 10, 30, 0.5);
+    color: rgba(220, 235, 255, 0.9);
+    font-size: 12px;
+}
+
+.role-list {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.role-list li {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(120, 200, 255, 0.15);
+}
+
+.coverage-readout {
+    margin: 4px 0;
+}
+
+.crew-roster {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    width: 100%;
+}
+
+.crew-card {
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(120, 200, 255, 0.2);
+    background: rgba(0, 10, 30, 0.5);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: all 0.2s ease;
+}
+
+.crew-card:hover {
+    border-color: rgba(255, 140, 200, 0.5);
+    box-shadow: 0 0 16px rgba(255, 107, 157, 0.2);
+    transform: translateY(-2px);
+}
+
+.crew-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 320px;
+}
+
+.crew-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.crew-form input {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(120, 200, 255, 0.2);
+    background: rgba(0, 10, 30, 0.5);
+    color: rgba(220, 235, 255, 0.9);
+    font-size: 14px;
+}
+
+.engage-button {
+    font-family: "Orbitron", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 16px 40px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, rgba(90, 35, 75, 0.8), rgba(60, 25, 70, 0.8));
+    border: 1px solid rgba(255, 140, 200, 0.5);
+    color: rgba(255, 220, 240, 0.95);
+    text-shadow: 0 0 10px rgba(255, 140, 200, 0.8);
+    box-shadow: 0 0 25px rgba(255, 107, 157, 0.2);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.engage-button:hover {
+    box-shadow: 0 0 40px rgba(255, 107, 157, 0.5);
+    transform: translateY(-2px);
+}
