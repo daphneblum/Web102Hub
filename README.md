@@ -1,44 +1,55 @@
-# Web Development Project 6 - *Starseed Forecast*
+# Web Development Project 7 - *Crew Creator*
 
 Submitted by: **Daphne Blum**
 
-This web app: **This web app displays real-time astronomical and astrological data in a retrofuturistic dashboard inspired by late 90s and early 2000s sci-fi interfaces. Users can browse current planetary positions, filter planets by zodiac element and retrograde status, view detailed information for each celestial body, and explore visualizations including a retrograde timeline and planetary aspect radar. This data is then used with Google Gemini to generate a dreamy, sci-fi-style daily horoscope inspired by Summer Wiley's Starseed Weather Service skits on TikTok.**
+This web app: **This web app lets you build out a project team by assigning members to self-defined roles and giving each of them a checklist of role-specific tasks. Roles and their task pools are entirely user-defined on a dedicated setup page — nothing is hardcoded — so the same app works whether you're organizing a research team, an engineering sprint, or an away team. The crew roster's summary statistics and card colors update live as tasks get checked off, giving an at-a-glance read on who's finished and who's still working.**
 
-Time spent: **30** hours spent in total
+Time spent: **10** hours spent in total
 
 ## Required Features
 
-- [x] **Clicking on an item in the list view displays more details about it**
-  - Planet entries in the directory navigate to a dedicated detail page
-  - Detail pages display additional astronomical and astrological information
-  - Navigation remains consistent across dashboard and detail views
+- [x] **The web app contains a page that features a create form to add a new crewmate**
+  - Users can name the crewmate
+  - Users can set the crewmate's attributes by clicking on one of several values
 
-- [x] **Each detail view of an item has a direct, unique URL link to that item’s detail view page**
-  - Each planet has its own unique route (for example: `/planet/venus`)
+- [x] **The web app includes a summary page of all the user's added crewmates**
+  - The web app contains a summary page dedicated to displaying all the crewmates the user has made so far
+  - The summary page is sorted by creation date such that the most recently created crewmates appear at the top
 
-- [x] **The app includes at least two unique charts developed using the fetched data that tell an interesting story**
-  - Retrograde Timeline visualization
-  - Planetary Aspect Radar visualization
+- [x] **A previously created crewmate can be updated from the list of crewmates in the summary page**
+  - Each crewmate has an edit button that will take users to an update form for the relevant crewmate
+  - Users can see the current attributes of their crewmate on the update form
+  - After editing the crewmate's attribute values using the form, the user can immediately see those changes reflected in the update form and on the summary page
+
+- [x] **A previously created crewmate can be deleted from the crewmate list**
+  - Using the edit form detailed in the previous _crewmates can be updated_ feature, there is a button that allows users to delete that crewmate
+  - After deleting a crewmate, the crewmate should no longer be visible in the summary page
+  
+- [x] **Each crewmate has a direct, unique URL link to an info page about them**
+  - Clicking on a crewmate in the summary page navigates to a detail page for that crewmate
+  - The detail page contains extra information about the crewmate not included in the summary page
+  - Users can navigate to the edit form from the detail page
 
 The following **optional** features are implemented:
 
-- [x] The site's customized dashboard contains additional information explaining the current celestial conditions
-- [x] The site allows users to toggle between different data visualizations
-  - The Aspect Radar allows users to toggle between scope view and list view
+- [x] A crewmate can be given a category upon creation which restricts their attribute value options
+  - e.g., a Dungeons and Dragons class or a development team role (project manager, product owner, etc.)
+  - User can choose a `category` option to describe their crewmate before any attributes are specified
+  - Based on the category value, users are allowed to access only a subset of the possible attributes
+- [x] A section of the summary page displays summary statistics about a user's crew on their crew page
+  - e.g., the percent of members with a certain attribute
+- [x] The summary page displays a custom "success" metric about a user's crew which changes the look of the crewmate list
+  - e.g., a pirate crew's predicted success at commandeering a new galley
 
 The following **additional** features are implemented:
 
-## 🛠️ Additional Features & Architectural Highlights (Beyond Rubric)
+## The following **additional** features are implemented:
 
-- [x] AI-generated astrological forecasts powered by Google Gemini
-- [x] Forecasts generated from live planetary positions rather than static text
-- [x] Search planets by name or zodiac sign
-- [x] Filter by zodiac element
-- [x] Filter to display only retrograde planets
-- [x] Minimum degree slider filter
-- [x] Planet glyphs displayed alongside each celestial body
-- [x] Color-coded retrograde/direct status indicators
-- [x] Scrolling broadcast ticker displaying dynamic messages
+* [x] Categories double as roles with their own dedicated task pools, set up on a separate "Manage Roles & Tasks" page rather than hardcoded in the app
+* [x] Tasks assigned to a crewmate can be checked off as done individually, not just assigned/unassigned
+* [x] Each crewmate card's border color interpolates from cool blue to warm pink based on *that member's own* task completion rate, so it's possible to see at a glance who's finished and who isn't, in addition to the crew-wide progress bar
+* [x] A progress bar tracks total task completion across the whole crew alongside the summary statistics
+* [x] Built as an integrated station inside a larger React Three Fiber portfolio project (Enterprise Bridge), matching its existing LCARS/hologram visual system rather than as a standalone app
 
 
 
@@ -47,21 +58,14 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented features:
 
-<img src='/public/assets/weather.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='/public/assets/crewcreator.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 
-GIF created with Kap
+GIF created with Canva
 
 ## Notes
+-Due to time constraints, this project is much more straight-forward and less ambitious than my previous projects.
 
-- The biggest challenge in this project was balancing functionality with visual design. I wanted the dashboard to feel like an interface from a retrofuturistic spacecraft rather than a traditional analytics dashboard while still presenting real astronomical data in a usable way. Designing reusable React components, organizing the layout, and refining the visual styling required multiple iterations as the project grew beyond the original assignment scope.
-
-- This project is still a work in progress. There are plans to add further visualizations to the detail pages as well as improve readability.
-
-- This project was a completely new dashboard, different from Project 5. Because of this, I ensured it met all the rubric requirements for project 5 as well as project 6. 
-
-- Forecast was inspired by Summer Wiley on TikTok:
-https://www.tiktok.com/t/ZP8GGqyFC/
 
 ## License
 

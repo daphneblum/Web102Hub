@@ -4,7 +4,7 @@ import DashboardView from "./DashboardView.jsx";
 import CreateForm from "./CreateForm.jsx";
 import CrewDetail from "./CrewDetail.jsx";
 import EditForm from "./EditForm.jsx";
-import SetUpPage from "./SetupPage.js"
+import SetUpPage from "./SetupPage.jsx"
 import "./CrewCreatorStation.css";
 import "../../Hologram.css";
 

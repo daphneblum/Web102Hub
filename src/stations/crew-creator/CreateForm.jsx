@@ -8,7 +8,7 @@ export default function CreateForm() {
     const { addCrewmate, categories, tasksByCategory } = useCrewmates();
     const navigate = useNavigate();
     const [name, setName] = useState("");
-    const [category, useCategory] = useState("");
+    const [category, setCategory] = useState("");
     const [selectedTasks, setSelectedTasks] = useState([]);
     const availableTasks = category ? tasksByCategory[category] || [] : [];
 
@@ -20,7 +20,7 @@ export default function CreateForm() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        if(!name.trim() || category) return;
+        if(!name.trim() || !category) return;
         addCrewmate({ name: name.trim(), category, taskTexts: selectedTasks });
         navigate("/");
     }
@@ -92,6 +92,10 @@ export default function CreateForm() {
                     Add to Crew
                 </button>
             </form>
+            <br />
+            <Link to="/" className="hologram-label">
+                Back to roster
+            </Link>
         </div>
     );
 }

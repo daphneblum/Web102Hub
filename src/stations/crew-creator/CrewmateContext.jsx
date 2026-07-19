@@ -12,16 +12,23 @@ function buildTasks(existingTasks, selectedTexts) {
 export function CrewmateProvider({ children }) {
     const [crewmates, setCrewmates] = useState([]);
 
-    const [categories, setCateogries] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [tasksByCategory, setTasksByCategory] = useState({});
 
     function addCategory(name) {
         const trimmed = name.trim();
         if (!trimmed) return;
-        setCategories((prev) => 
-            prev.some((c) => c.toLowerCase() === trimmed.toLowerCase()) ? prev : [...prev, trimmed]);
-        setTasksByCategory((prev) => (prev[trimmed] ? prev : { ...prev, [trimmed]: [] }));
-    }   
+        const existing = categories.find(
+            (c) => c.toLowerCase() === trimmed.toLowerCase()
+        );
+        const canonical = existing || trimmed;
+        if (!existing) {
+            setCategories((prev) => [...prev, trimmed]);
+        }
+        setTasksByCategory((prev) =>
+            prev[canonical] ? prev : { ...prev, [canonical]: [] }
+        );
+    }
 
     function addTaskToCategory(category, taskText) {
         const trimmed = taskText.trim();
@@ -42,11 +49,12 @@ export function CrewmateProvider({ children }) {
         }));
     }
 
-    function addCrewmate({ name, role }) {
+    function addCrewmate({ name, category, taskTexts }) {
         const newCrewmate = {
             id: crypto.randomUUID(),
             name,
-            role,
+            category,
+            tasks: buildTasks([], taskTexts),
             createdAt: Date.now(),
         };
         setCrewmates((prev) => [...prev, newCrewmate]);
@@ -61,7 +69,7 @@ export function CrewmateProvider({ children }) {
                     ...c,
                     name,
                     category,
-                    tasks: buildTasks(c.tasks, tastTexts),
+                    tasks: buildTasks(c.tasks, taskTexts),
                 };
             })
         );
